@@ -6,6 +6,7 @@ const passport = require('passport');
 const keys = require('./configs/keys');
 
 const adminRouter = require('./routes/admin');
+const authorRouter = require('./routes/authors');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -25,6 +26,9 @@ mongoose.connect(uri, {useNewUrlParser: true})
 app.use(passport.initialize());
 //admin router
 app.use('/admin', adminRouter);
+
+//authors router
+app.use('/authors', authorRouter);
 
 app.listen(PORT, (req, res) => {
     console.log("server running on port: " + PORT);
