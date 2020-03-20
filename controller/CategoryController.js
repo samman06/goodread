@@ -1,4 +1,5 @@
 const CategoryModel = require('../models/category');
+const validation = require("../validation/inputsValidation");
 
 class CategoryController {
 
@@ -14,6 +15,8 @@ class CategoryController {
     async addNewCategory(req, res) {
         const {name} = req.body;
         if (!req.user.isAdmin) return res.status(400).json({msg: 'Un Authorized Access'});
+        const {errors, isValid} = validation.validateCategoryInputs(name);
+        if (!isValid) return res.json({errors});
         try {
             let category = await CategoryModel.findOne({name});
             if (category) return res.json({errors: {name: 'category already exists'}});

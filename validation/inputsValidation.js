@@ -36,6 +36,17 @@ class inputsValidation {
         }
     }
 
+    validateCategoryInputs(name) {
+        let errors = {}
+        name = !this.isEmpty(name) ? name : "";
+        if (!validator.isLength(name, {min: 3, max: 25}))
+            errors.name = "name must be between 3 and 25 characters";
+        return {
+            errors,
+            isValid: this.isEmpty(errors),
+        }
+    };
+
     isEmpty(value) {
         return value === undefined || value === null ||
             (typeof value === 'object' && Object.keys(value).length === 0) ||
