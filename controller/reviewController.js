@@ -26,6 +26,16 @@ class Reviews {
         }
     }
 
+    async updateReview(req, res) {
+        const {body, userId, bookId} = req.body;
+        try {
+            const review = await Review.findOneAndUpdate(req.params.id, {body, userId, bookId})
+            return res.json({review})
+        } catch (e) {
+            return res.json({msg: e})
+        }
+    }
+
     
 }
 
