@@ -33,6 +33,8 @@ class UserController {
 
     async login(req, res) {
         const {email, password} = req.body;
+        const {errors, isValid} = validation.validateLoginInputs(req.body);
+        if (!isValid) return res.json({errors});
         try {
             const user = await UsersModel.findOne({email: email});
             if (!user) return res.json({errors: {email: 'email not found'}});
