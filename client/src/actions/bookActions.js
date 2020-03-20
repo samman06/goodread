@@ -67,13 +67,33 @@ export const editBook = (id, bookData) => async (dispatch) => {
     }
 };
 
-export const setReadingStatus = (userBook) =>async (dispatch) => {
+export const setReadingStatus = (userBook) => async (dispatch) => {
     try {
         const {data} = await axios.put(`http://localhost:4000/userbook/book/`, userBook);
-        if (data.book)dispatch(getBooksAndRattedBooks());
+        if (data.book) dispatch(getBooksAndRattedBooks());
+    } catch (e) {
+        console.log(e);
+        console.log("No Book 4 U");
+    }
+};
+export const setReadingStatusBookProfile = (bookId, userBook) => async (dispatch) => {
+    try {
+        console.log(bookId);
+        const {data} = await axios.put(`http://localhost:4000/userbook/book/`, userBook);
+        console.log(data);
+        if (data.book) dispatch(getBookById(bookId));
     } catch (e) {
         console.log(e);
         console.log("No Book 4 U");
     }
 };
 
+export const removeUserBook = (bookId, id) => async (dispatch) => {
+    try {
+        console.log(id);
+        const {data} = await axios.delete(`http://localhost:4000/userbook/${id}`);
+        if (data.message) dispatch(getBookById(bookId));
+    } catch (e) {
+        console.log("No Book 4 U");
+    }
+};

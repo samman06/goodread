@@ -1,44 +1,34 @@
 import React, {Component} from 'react';
-import {Progress, CardBody, Input} from 'reactstrap';
+import {Progress} from 'reactstrap';
+import {Link} from "react-router-dom";
 import {connect} from "react-redux"
 import PropTypys from "prop-types"
-import {getBookById, setReadingStatus} from "../../actions/bookActions";
+import {getBookById, setReadingStatusBookProfile, removeUserBook} from "../../actions/bookActions";
+import StarRating from "../StarRating";
 import '../../Styles/bookprofile.css';
-// import SetStatusReading from "../../service/updateReadingStatus";
-// import BookReview from "./BookReview";
-// import BookReviewAlready from "./bookReviewAlready";
-// import BookAthor from "./book_author";
-
 
 class BookProfile extends Component {
-
     constructor(props) {
         super(props);
         this.bookId = this.props.match.params.id;
-        this.state = {
-            currentBook: '',
-            author: '',
-            category: '',
-        };
     }
 
     componentDidMount = async () => await this.props.getBookById(this.bookId);
-
-
     setReadingStatus = async (rateId, {target}) => {
         let shelve = target.value;
-        if (shelve === "Remove") {
-            await this.props.removeUserBook(this.bookId, rateId)
-        } else {
-            await this.props.setReadingStatus(this.bookId, {shelve, rateId});
-        }
+        if (shelve === "Remove") await this.props.removeUserBook(this.bookId, rateId);
+        else await this.props.setReadingStatusBookProfile(this.bookId, {shelve, bookId: this.bookId, rate: null});
+    };
+    setRate = async (bookId, rate) => {
+        await this.props.setReadingStatusBookProfile(this.bookId, {shelve: "Read", rate, bookId});
     };
 
     render() {
         const {book} = this.props.book;
-        let currentBook, shelveStatus;
+        let currentBook, rateId, shelveStatus;
         if (book) {
-            const {authorId, categoryId} = book;
+            const {authorId, categoryId, bookUser} = book;
+            if (bookUser) rateId = bookUser._id;
             currentBook = (
                 <div className="row BookPage">
                     <div className="col_trainings BookImg">
@@ -49,17 +39,27 @@ class BookProfile extends Component {
                         </div>
                         <div>
                             <select
-                                onChange={(event) => this.setReadingStatus(book._id, event)}
+                                onChange={(event) => this.setReadingStatus(rateId, event)}
                                 className="form-control" name="status">
-                                <option value={book.shelve}>{book.shelve}</option>
-                                {
-                                    (shelveStatus = ['Reading', 'Will Read', 'Read', 'Remove']) &&
-                                    shelveStatus.splice(shelveStatus.indexOf(book.shelve), 1) &&
-                                    shelveStatus.map(shelve => <option key={shelve} value={shelve}>{shelve}</option>)
+                                {bookUser ? <option value={bookUser.shelve}>{bookUser.shelve}</option> :
+                                    <option value="chose">chose</option>
                                 }
+                                {bookUser ?
+                                    (shelveStatus = ['Reading', 'Will Read', 'Read', 'Remove']) &&
+                                    shelveStatus.splice(shelveStatus.indexOf(bookUser.shelve), 1)
+                                    : (shelveStatus = ['Reading', 'Will Read', 'Read'])
+                                }
+                                {shelveStatus.map(shelve => <option key={shelve} value={shelve}>{shelve}</option>)}
                             </select>
                             <div className="card-body">
                                 <p>User Evaluation</p>
+                                {bookUser ? <StarRating
+                                    onClick={this.setRate}
+                                    rate={bookUser.rate || 0} rateId={book._id}
+                                /> : <StarRating
+                                    onClick={this.setRate}
+                                    rate={0} rateId={book._id}
+                                />}
                             </div>
                         </div>
                     </div>
@@ -67,14 +67,14 @@ class BookProfile extends Component {
                     <div className="col_downloads BookData">
                         <h1>{book.name}</h1>
                         <h3>
-                            <a href={`/authors/${authorId._id}`}>
-                                {`by ${authorId.firstName} ${authorId.lastName}`}
-                            </a>
+                            By <Link to={`/authors/${authorId._id}`}>
+                            {`${authorId.firstName} ${authorId.lastName}`}
+                        </Link>
                         </h3>
                         <h3>
-                            <a href={`/categories/${categoryId._id}`}>
-                                {categoryId.name} Category
-                            </a>
+                            Category <Link to={`/categories/${categoryId._id}`}>
+                            {categoryId.name}
+                        </Link>
                         </h3>
                         <div className="text-center">{book.rate} %</div>
                         <Progress value={book.rate}/>
@@ -92,8 +92,9 @@ class BookProfile extends Component {
 
 BookProfile.protoTypes = {
     getBookById: PropTypys.func.isRequired,
-    setReadingStatus: PropTypys.func.isRequired,
+    setReadingStatusBookProfile: PropTypys.func.isRequired,
+    removeUserBook: PropTypys.func.isRequired,
 };
 
 const mapStateToProps = ({book}) => ({book});
-export default connect(mapStateToProps, {getBookById, setReadingStatus})(BookProfile);
+export default connect(mapStateToProps, {getBookById, setReadingStatusBookProfile, removeUserBook})(BookProfile);

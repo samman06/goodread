@@ -31,8 +31,10 @@ class UserBooks {
 
     async updateUserBookById(req, res) {
         const {rateId, shelve, rate} = req.body;
-        let userBook = {shelve, rate};
+        let userBook = {shelve, rate,};
         try {
+            console.log(1);
+            console.log(userBook);
             await userBooksModel.findByIdAndUpdate(rateId, {...userBook});
             return res.json({book: "OK"})
         } catch (err) {
@@ -45,6 +47,9 @@ class UserBooks {
         const {bookId, shelve, rate} = req.body;
         let userBook = {shelve, rate};
         try {
+            console.log(userBook);
+            console.log(bookId);
+            console.log(userId);
             await userBooksModel.findOneAndUpdate({bookId,userId}, {...userBook},{
                 new: true,
                 upsert: true

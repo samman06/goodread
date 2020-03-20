@@ -9,6 +9,7 @@ export default class StarRating extends Component {
 
     render() {
         const {rate} = this.props;
+        console.log(rate);
         return (
             <div>
 

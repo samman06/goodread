@@ -34,6 +34,7 @@ bookRouter.post('/',
 
 //get book by id
 bookRouter.get('/:id',
+    passport.authenticate('jwt', {session: false}),
     async (req, res) =>
         await Book.getBookById(req, res)
 );

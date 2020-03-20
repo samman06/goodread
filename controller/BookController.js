@@ -51,9 +51,13 @@ class BookController {
     }
 
 
-    async getBookById(req, res) {
+    async getBookById({params, user}, res) {
         try {
-            const book = await BookModel.findById(req.params.id).populate('authorId').populate('categoryId');
+            let book = await BookModel.findById(params.id).populate('categoryId')
+                .populate('authorId', ["firstName", "lastName", "_id"]);
+            let {_id, photo, name, categoryId, authorId} = book;
+            const bookUser = await userBooksModel.findOne({bookId: params.id, userId: user._id});
+            if (bookUser) book = {_id, photo, name, categoryId, authorId, bookUser};
             return res.json({book})
         } catch (err) {
             return res.json({msg: err});
