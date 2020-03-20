@@ -24,4 +24,10 @@ bookRouter.post('/',
 );
 
 
+//get book by id
+bookRouter.get('/:id',
+    async (req, res) =>
+        await Book.getBookById(req, res)
+);
+
 module.exports = bookRouter;

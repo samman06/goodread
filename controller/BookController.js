@@ -36,6 +36,16 @@ class BookController {
         }
     }
 
+
+    async getBookById(req, res) {
+        try {
+            const book = await BookModel.findById(req.params.id).populate('authorId').populate('categoryId')
+            return res.json(book)
+        } catch (err) {
+            return res.json({msg: err});
+        }
+    }
+
 }
 
 const Book = new BookController();
