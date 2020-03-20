@@ -8,6 +8,7 @@ const keys = require('./configs/keys');
 const adminRouter = require('./routes/admin');
 const authorRouter = require('./routes/authors');
 const categoryRouter = require('./routes/categories');
+const bookRouter = require('./routes/book');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -33,7 +34,8 @@ app.use('/admin', adminRouter);
 app.use('/authors', authorRouter);
 //categories router
 app.use('/categories', categoryRouter);
-
+// books router
+app.use('/books', bookRouter);
 
 app.listen(PORT, (req, res) => {
     console.log("server running on port: " + PORT);
