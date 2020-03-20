@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4000;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(expressValidator());
-
+app.use('/uploads', express.static('uploads'));
 
 const uri = keys.mongoURI;
 mongoose.set('useCreateIndex', true);
