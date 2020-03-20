@@ -1,6 +1,7 @@
 const BookModel = require('../models/book');
 const CategoryModel = require('../models/category');
 const AuthorModel = require('../models/author');
+const validation = require("../validation/inputsValidation");
 
 
 class BookController {
@@ -17,7 +18,8 @@ class BookController {
     async addNewBook(req, res) {
         if (req.user.isAdmin != true) return res.status(400).json({msg: 'Un Authorized Access'});
         const {name, categoryId, authorId, authorName, photo = ""} = req.body;
-        
+        const {errors, isValid} = validation.validateBookInputs(name);
+        if (!isValid) return res.json({errors});
         try {
             console.log(categoryId, name, authorId, authorName);
             const category = await CategoryModel.findById(categoryId);
