@@ -119,7 +119,16 @@ class inputsValidation {
             isValid: this.isEmpty(errors),
         }
     };
-    
+
+    validationReviewInput(review) {
+        let errors = {};
+        review = !this.isEmpty(review) ? review : "";
+        if (review.length === 0) errors.review = "text is required";
+        return {
+            errors,
+            isValid: this.isEmpty(errors),
+        }
+    };
 
     isEmpty(value) {
         return value === undefined || value === null ||
