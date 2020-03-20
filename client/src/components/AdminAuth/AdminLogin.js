@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {LoginAdmin} from '../../actions/authActions';
 import TextFieldGroup from "../common/TextFieldGroup";
+import '../../Styles/AdminPanel.css';
 
 
 class AdminLogin extends Component {
