@@ -31,6 +31,25 @@ class UserController {
         }
     }
 
+    async login(req, res) {
+        const {email, password} = req.body;
+        try {
+            const user = await UsersModel.findOne({email: email});
+            if (!user) return res.json({errors: {email: 'email not found'}});
+            const isMached = await bcrypt.compare(password, user.password);
+            if (isMached) {
+                const {_id, firstName, lastName, email, photo, isAdmin} = user;
+                const payload = {_id, firstName, lastName, email, photo, isAdmin};
+                let token = await jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600})
+                if (token) return res.json({token: "Bearer " + token, user: {_id, firstName, lastName}});
+            } else {
+                return res.json({errors: {password: 'password incorrect'}});
+            }
+        }catch (e) {
+            console.log(e);
+        }
+    }
+
 }
 
 const User = new UserController();

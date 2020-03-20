@@ -16,6 +16,12 @@ userRouter.post('/signup',
     async (req, res) => User.signUp(req, res)
 );
 
+// @route   GET /users/login
+// @desc    login user
+// @access  Public
+userRouter.post('/login',
+    async (req, res) => User.login(req, res)
+);
 
 
 module.exports = userRouter;
