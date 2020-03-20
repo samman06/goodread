@@ -15,7 +15,7 @@ class TableContent extends Component {
 
     componentDidMount = async () => await this.props.getUserBooks(this.userId);
     all = async () => await this.props.getUserBooks(this.userId);
-    read = async () => await this.props.getUserBooksStatus(this.userId, "read");
+    read = async () => await this.props.getUserBooksStatus(this.userId, "Read");
     currentlyRead = async () => await this.props.getUserBooksStatus(this.userId, "Reading");
     wantToRead = async () => await this.props.getUserBooksStatus(this.userId, "willRead");
     setReadingStatus = async (rateId, {target}) => {
