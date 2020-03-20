@@ -3,11 +3,10 @@ import {Progress} from 'reactstrap';
 import {Link} from "react-router-dom";
 import {connect} from "react-redux"
 import PropTypys from "prop-types"
-import {
-    getBookById, setReadingStatusBookProfile, removeUserBook, addReview, getReviews
-} from "../../actions/bookActions";
+import {getBookById, setReadingStatusBookProfile, removeUserBook} from "../../actions/bookActions";
+import {addReview, getReviews, removeReview} from "../../actions/reviewActions";
 import StarRating from "../StarRating";
-import BookReview from "./BookReview"
+import BookReviews from "./BookReviews"
 import '../../Styles/bookprofile.css';
 
 class BookProfile extends Component {
@@ -35,11 +34,15 @@ class BookProfile extends Component {
     };
     addReview = async () => {
         let {review} = this.state;
-        await this.props.addReview(this.bookId, review)
-    }
+        let {payload} = await this.props.addReview(this.bookId, review)
+        if (payload) this.setState({review: ""});
+    };
+    removeReview = async (reviewId) => await this.props.removeReview(reviewId);
 
     render() {
-        const {book,reviews} = this.props.book;
+        const {book} = this.props.book;
+        const {reviews} = this.props.review;
+        const userId = this.props.auth.user._id;
         let currentBook, rateId, shelveStatus;
         if (book) {
             const {authorId, categoryId, bookUser} = book;
@@ -100,11 +103,13 @@ class BookProfile extends Component {
         return (
             <div className="container-fluid">
                 {currentBook}
-                <BookReview
+                <BookReviews
                     reviews={reviews}
                     onChange={this.onChange}
                     review={this.state.review}
                     addReview={this.addReview}
+                    removeReview={this.removeReview}
+                    userId={userId}
                 />
             </div>
         );
@@ -117,9 +122,10 @@ BookProfile.protoTypes = {
     removeUserBook: PropTypys.func.isRequired,
     addReview: PropTypys.func.isRequired,
     getReviews: PropTypys.func.isRequired,
+    removeReview: PropTypys.func.isRequired,
 };
 
-const mapStateToProps = ({book}) => ({book});
+const mapStateToProps = ({book, review, auth}) => ({book, review, auth});
 export default connect(mapStateToProps, {
-    getBookById, setReadingStatusBookProfile, removeUserBook, addReview, getReviews
+    getBookById, setReadingStatusBookProfile, removeUserBook, addReview, getReviews, removeReview
 })(BookProfile);

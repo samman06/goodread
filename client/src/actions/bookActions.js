@@ -1,7 +1,5 @@
 import axios from "axios";
-import {
-    GET_BOOKS, BOOKS_LOADING, CLEAR_ERRORS, DELETE_BOOK, GET_ERRORS, GET_BOOK, GET_REVIEWS, ADD_REVIEW
-} from "./types";
+import {GET_BOOKS, BOOKS_LOADING, CLEAR_ERRORS, DELETE_BOOK, GET_ERRORS, GET_BOOK} from "./types";
 
 export const getBooks = () => async (dispatch) => {
     dispatch({type: BOOKS_LOADING});
@@ -18,7 +16,6 @@ export const getBookById = (bookID) => async (dispatch) => {
     dispatch({type: CLEAR_ERRORS});
     try {
         const {data} = await axios.get(`http://localhost:4000/books/${bookID}`);
-        console.log(data);
         return dispatch({type: GET_BOOK, payload: data.book});
     } catch (e) {
         return dispatch({type: GET_BOOKS, payload: []});
@@ -91,21 +88,3 @@ export const removeUserBook = (bookId, id) => async (dispatch) => {
         console.log("No Book 4 U");
     }
 };
-
-export const addReview = (bookId, review) => async (dispatch) => {
-    try {
-        const {data} = await axios.post(`http://localhost:4000/review/`, {bookId, review});
-        if (data.review) dispatch({type: ADD_REVIEW, payload: data.review})
-    } catch (e) {
-        console.log("error");
-    }
-};
-
-export const getReviews = (bookId) => async (dispatch) => {
-    try {
-        const {data} = await axios.get(`http://localhost:4000/review/${bookId}`);
-        if (data.reviews) dispatch(dispatch({type: GET_REVIEWS, payload: data.reviews}))
-    } catch (e) {
-        console.log("error");
-    }
-}

@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import '../../Styles/AdminPanel.css';
 
-class BookReview extends Component {
+class BookReviews extends Component {
     onChange = ({target}) => this.props.onChange(target);
     addReview = async () => await this.props.addReview();
-
+    removeReview = (reviewId) => this.props.removeReview(reviewId);
 
     render() {
-        const {reviews, review} = this.props;
+        const {reviews, review, userId} = this.props;
         let allReviews = reviews.map(review => (<div className="input-group mb-3" key={review._id}>
             <span className="form-control">{review.review}</span>
             <div className="input-group-prepend">
-                <button className="btn btn-danger">
-                    Remove
-                </button>
+                {userId === review.userId._id ?
+                    <button className="btn btn-danger" onClick={() => this.removeReview(review._id)}>
+                        Remove
+                    </button> : null}
             </div>
         </div>));
         return (
@@ -35,4 +36,4 @@ class BookReview extends Component {
     }
 }
 
-export default BookReview;
+export default BookReviews;

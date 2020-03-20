@@ -3,14 +3,16 @@ const validation = require("../validation/inputsValidation");
 
 class Reviews {
     async addReview({user, body}, res) {
-        const {_id} = user;
-        const {review, bookId} = body;
+        const userId = user._id;
+        let {review, bookId} = body;
         const {errors, isValid} = validation.validationReviewInput(review);
         if (!isValid) return res.json({errors});
         try {
-            let newReview = new ReviewModel({review, bookId, userId: _id});
-            newReview = await newReview.save();
-            return res.json({review:newReview});
+            let newReview = new ReviewModel({review, bookId, userId});
+            review = await newReview.save();
+            let populateOptions = {path: "userId", select: ["_id", "firstName", "lastName"]}
+            review = await ReviewModel.populate(review, populateOptions);
+            return res.json({review});
         } catch (e) {
             return res.json({e});
         }
@@ -36,10 +38,10 @@ class Reviews {
         }
     }
 
-    async removeReview(req, res) {
+    async removeReview({params}, res) {
         try {
-            const review = await ReviewModel.findByIdAndRemove(req.params.id);
-            return res.json({review})
+            await ReviewModel.findByIdAndRemove(params.id);
+            return res.json({message: "review removed"})
         } catch (err) {
             return res.json({err})
         }

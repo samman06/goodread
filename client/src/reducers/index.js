@@ -5,6 +5,7 @@ import categoryReducer from './categoryReducer';
 import authorReducer from './authorReducer';
 import bookReducer from './bookReducer';
 import userBooksReducer from './userBooksReducer';
+import reviewReducer from './reviewReducer';
 
 
 export default combineReducers({
@@ -14,4 +15,5 @@ export default combineReducers({
     author:authorReducer,
     book:bookReducer,
     userBooks:userBooksReducer,
+    review:reviewReducer,
 });

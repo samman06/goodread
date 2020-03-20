@@ -1,12 +1,4 @@
-import {
-    GET_BOOKS,
-    ADD_BOOK,
-    GET_BOOK,
-    GET_REVIEWS,
-    ADD_REVIEW,
-    BOOKS_LOADING,
-    DELETE_BOOK,
-} from "../actions/types";
+import {GET_BOOKS, ADD_BOOK, GET_BOOK, GET_REVIEWS, ADD_REVIEW, BOOKS_LOADING, DELETE_BOOK} from "../actions/types";
 
 const initialState = {book: null, books: null, reviews: [], loading: false};
 export default function (state = initialState, action) {

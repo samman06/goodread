@@ -20,6 +20,7 @@ export const GET_BOOKS = 'GET_BOOKS';
 export const GET_BOOK = 'GET_BOOK';
 export const GET_REVIEWS = 'GET_REVIEWS';
 export const ADD_REVIEW = 'ADD_REVIEW';
+export const REMOVE_REVIEW = 'REMOVE_REVIEW';
 export const DELETE_BOOK = 'DELETE_BOOK';
 export const ADD_BOOK = 'ADD_BOOK ';
 
