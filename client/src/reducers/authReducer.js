@@ -1,4 +1,4 @@
-import validation from '../../../validation/inputsValidation';
+// import validation from '../../../validation/inputsValidation';
 
 import { SET_CURRENT_USER } from '../actions/types';
 
@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
     case SET_CURRENT_USER:
       return {
         ...state,
-        isAuthenticated: !validation.isEmpty(action.payload),
+        isAuthenticated: action.payload,//!validation.isEmpty(action.payload),
         user: action.payload
       };
     default:

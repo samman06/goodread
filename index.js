@@ -15,7 +15,9 @@ const reviewRouter = require('./routes/review');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+const cors = require('cors');
 
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(expressValidator());
