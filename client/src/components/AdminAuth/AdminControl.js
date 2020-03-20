@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {TabContent, TabPane} from "reactstrap";
+import '../../Styles/AdminPanel.css';
+import "../../Styles/AdminPanel.css"
 import AdminNavItem from "./AdminNavItem"
 
 class AdminControl extends Component {
@@ -20,7 +22,7 @@ class AdminControl extends Component {
         const {activeTab} = this.state;
         return (
             <div className="row container-fluid">
-                <div className="col-lg-12">
+                <div className="col-lg-12 AdminPanelControls">
                     <AdminNavItem activeTab={activeTab} onClick={this.toggle}/>
                     <TabContent activeTab={activeTab}>
                         <TabPane tabId="1" className="row">
