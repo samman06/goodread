@@ -1,4 +1,5 @@
 const AuthorModel = require('../models/author');
+const BookModel = require('../models/book');
 const validation = require("../validation/inputsValidation");
 
 class AuthorController {
@@ -53,6 +54,17 @@ class AuthorController {
             return res.send({message: 'updated'})
         } catch (e) {
             return res.send({error: 'error in update data'});
+        }
+    }
+
+    async deleteAuthorById({user, params}, res) {
+        if (!user.isAdmin) return res.json({msg: 'Un Authorized Access'});
+        try {
+            await AuthorModel.findByIdAndRemove(params.id);
+            await BookModel.remove({authorId: params.id});
+            return res.json({message: 'deleted'});
+        } catch (e) {
+            return res.send({error: 'error in delete data '});
         }
     }
 }
