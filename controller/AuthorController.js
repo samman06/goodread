@@ -67,6 +67,15 @@ class AuthorController {
             return res.send({error: 'error in delete data '});
         }
     }
+
+    async getAuthorBooks({params}, res) {
+        try {
+            const authorBooks = await BookModel.find({authorId: params.id});
+            return res.json(authorBooks)
+        } catch (e) {
+            return res.send('error in getting data ' + e)
+        }
+    }
 }
 
 const Author = new AuthorController();

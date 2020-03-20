@@ -9,6 +9,7 @@ const upload = multer({
     storage, fileFilter,
     limits: {fileSize: 1024 * 1024 * 5},
 });
+
 //get all authors
 authorRouter.get('/', (req, res) =>
     AuthorController.getAllAuthors(req, res)
@@ -36,6 +37,11 @@ authorRouter.put('/:id',
 authorRouter.delete('/:id',
     // passport.authenticate('jwt', {session: false}),
     (req, res) => AuthorController.deleteAuthorById(req, res)
+);
+
+//get books of specific author 
+authorRouter.get('/:id/books',
+    (req, res) => AuthorController.getAuthorBooks(req, res)
 );
 
 module.exports = authorRouter;
