@@ -39,6 +39,20 @@ class CategoryController {
         }
     }
 
+    async updateCategoryById({user, body, params}, res) {
+        const {name} = body;
+        if (!user.isAdmin) return res.status(400).json({msg: 'Un Authorized Access'});
+        const {errors, isValid} = validation.validateCategoryInputs(name);
+        if (!isValid) return res.json(errors);
+        try {
+            await CategoryModel.updateOne({_id: params.id}, {$set: {name: name},});
+            return res.json({message: 'updated'})
+        } catch (err) {
+            return res.json({err})
+        }
+    }
+
+ 
 }
 
 const Category = new CategoryController();
