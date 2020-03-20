@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const UsersModel = require('../models/user');
+const validation = require("../validation/inputsValidation");
 
 class UserController {
     
@@ -13,6 +14,8 @@ class UserController {
     }
 
     async signUp(req, res) {
+        const {errors, isValid} = validation.validateRegisterInputs(req.body);
+        if (!isValid) return res.json({errors});
         try {
             let user = await UsersModel.findOne({email: req.body.email})
             if (user) return res.json({email: 'Email already exists'});

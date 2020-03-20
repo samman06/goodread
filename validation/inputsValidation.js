@@ -57,6 +57,49 @@ class inputsValidation {
             isValid: this.isEmpty(errors),
         }
     }
+    validateRegisterInputs({firstName, lastName, email, password, password2}) {
+        let errors = {};
+        firstName = !this.isEmpty(firstName) ? firstName : "";
+        lastName = !this.isEmpty(lastName) ? lastName : "";
+        email = !this.isEmpty(email) ? email : "";
+        password = !this.isEmpty(password) ? password : "";
+        password2 = !this.isEmpty(password2) ? password2 : "";
+
+        // check on the length of the name and if is empty
+        if (!validator.isLength(firstName, {min: 3, max: 30}))
+            errors.firstName = "firstName must be between 3 and 30 characters";
+
+        if (validator.isEmpty(firstName))
+            errors.firstName = "firstName is required";
+
+        if (!validator.isLength(lastName, {min: 3, max: 30}))
+            errors.lastName = "lastName must be between 3 and 30 characters";
+
+        if (validator.isEmpty(lastName))
+            errors.lastName = "lastName is required";
+
+        //check if the email is valied or empty
+        if (!validator.isEmail(email))
+            errors.email = "email is invalid";
+
+        if (validator.isEmpty(email))
+            errors.email = "email is required";
+
+        //check on the length of the password and if is empty
+        if (!validator.isLength(password, {min: 5, max: 20}))
+            errors.password = "password must be between 5 and 20 characters";
+
+        if (validator.isEmpty(password2))
+            errors.password2 = "confirm password is required";
+
+        // check if the tow password field are equl or not
+        if (password !== password2)
+            errors.password2 = "the tow password field are diffrent";
+        return {
+            errors,
+            isValid: this.isEmpty(errors),
+        }
+    };
 
     isEmpty(value) {
         return value === undefined || value === null ||
