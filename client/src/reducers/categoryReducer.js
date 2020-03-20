@@ -11,6 +11,12 @@ export default function (state = initialState, action) {
                 categories: action.payload,
                 loading: false
             };
+        case GET_CATEGORY_BOOKS:
+            return {
+                ...state,
+                books: action.payload,
+                loading: false
+            };
         default:
             return state;
     }

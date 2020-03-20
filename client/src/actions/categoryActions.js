@@ -11,3 +11,13 @@ export const getCategories = () => async (dispatch) => {
         return dispatch({ type: GET_CATEGORIES, payload: [] });
     }
 };
+export const getCategoryBooks = (categoryId) => async (dispatch) => {
+    dispatch({ type: CATEGORIES_LOADING });
+    dispatch({ type: CLEAR_ERRORS });
+    try {
+        const { data } = await axios.get(`http://localhost:4000/books/category/${categoryId}`);
+        return dispatch({ type: GET_CATEGORY_BOOKS, payload: data.books });
+    } catch (e) {
+        return dispatch({ type: GET_CATEGORIES, payload: [] });
+    }
+};
