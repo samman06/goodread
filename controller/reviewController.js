@@ -36,6 +36,15 @@ class Reviews {
         }
     }
 
+    async removeReview(req, res) {
+        try {
+            const review = await Review.findByIdAndRemove(req.params.id)
+            return res.json({review})
+        } catch (e) {
+            return res.json({msg: e})
+        }
+    }
+
     
 }
 

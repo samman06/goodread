@@ -8,4 +8,6 @@ reviewRouter.get('/', (req, res) => reviewsController.getBookReviews(req, res));
 
 reviewRouter.put('/:id', (req, res) => reviewsController.updateReview(req, res));
 
+reviewRouter.delete('/:id', (req, res) => reviewsController.removeReview(req, res));
+
 module.exports = reviewRouter;
