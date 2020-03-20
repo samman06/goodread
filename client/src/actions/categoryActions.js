@@ -39,3 +39,13 @@ export const deleteCategory = (id) => async (dispatch) => {
         console.log('data not deleted');
     }
 };
+export const editCategory = (id, categoryData) => async (dispatch) => {
+    try {
+        let { data } = await axios.put(`http://localhost:4000/categories/${id}`, categoryData);
+        if (!data.message) dispatch({ type: GET_ERRORS, payload: data });
+        else await dispatch(getCategories());
+        return data
+    } catch (e) {
+        console.log('data not edited');
+    }
+};

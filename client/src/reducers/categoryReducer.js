@@ -5,6 +5,12 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case CATEGORIES_LOADING:
             return { ...state, loading: true };
+        case GET_CATEGORY:
+            return {
+                ...state,
+                category: action.payload,
+                loading: false
+            };
         case GET_CATEGORIES:
             return {
                 ...state,
