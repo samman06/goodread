@@ -5,7 +5,6 @@ import {LoginAdmin} from '../../actions/authActions';
 import TextFieldGroup from "../common/TextFieldGroup";
 import '../../Styles/AdminPanel.css';
 
-
 class AdminLogin extends Component {
     constructor(props) {
         super(props);
@@ -16,20 +15,16 @@ class AdminLogin extends Component {
     }
 
     componentDidMount() {
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push('/AdminControls');
-        }
+        if (this.props.auth.isAuthenticated) this.props.history.push('/AdminControls');
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push('/AdminControls');
-        }
+    componentWillReceiveProps({auth}) {
+        if (auth.isAuthenticated) this.props.history.push('/AdminControls');
     }
 
-    onchange = (e) => {
+    onchange = ({target}) => {
         this.setState({
-            [e.target.name]: e.target.value
+            [target.name]: target.value
         });
     };
 
@@ -42,7 +37,6 @@ class AdminLogin extends Component {
     render() {
         const {email, password} = this.state;
         const {errors} = this.props;
-        console.log(this.props);
         return (
             <div className='container-fluid'>
                 <div className="row">
@@ -50,21 +44,17 @@ class AdminLogin extends Component {
                         <h3>Admin Panel</h3>
                         <hr/>
                         <form onSubmit={this.onSubmit} className="form-group">
-
                             <div className="form-group">
                                 <label htmlFor="exampleInputEmail1">Email</label>
                                 <TextFieldGroup
-                                    placeholder="Email Address"
-                                    className="form-control"
-                                    type="email" error={errors.email}
-                                    name="email" value={email}
-                                    onChange={this.onchange}
+                                    placeholder="Email Address" className="form-control"
+                                    type="email" error={errors.email} name="email"
+                                     value={email} onChange={this.onchange}
                                 />
                             </div>
                             <label htmlFor="exampleInputPassword1">Password</label>
                             <TextFieldGroup
-                                placeholder="Password"
-                                className="form-control"
+                                placeholder="Password" className="form-control"
                                 type="password" name="password"  error={errors.password}
                                 value={password} onChange={this.onchange}
                             />
