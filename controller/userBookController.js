@@ -29,6 +29,17 @@ class UserBooks {
         }
     }
 
+    async updateUserBook(req, res) {
+        const {rateId, shelve, rate} = req.body;
+        let userBook = {shelve, rate};
+        try {
+            await userBooksModel.findByIdAndUpdate(rateId, {...userBook});
+            return res.json({book: "OK"})
+        } catch (err) {
+            return res.json({err})
+        }
+    }
+
 }
 
 const userBooksController  = new UserBooks();

@@ -10,4 +10,8 @@ userBookRouter.get('/:userId', (req, res) =>
     userBooksController.getUserBooks(req, res)
 );
 
+userBookRouter.put('/', (req, res) =>
+    userBooksController.updateUserBook(req, res)
+);
+
 module.exports = userBookRouter;
