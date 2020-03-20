@@ -30,4 +30,9 @@ bookRouter.get('/:id',
         await Book.getBookById(req, res)
 );
 
+//get book by id
+bookRouter.get('/category/:categoryId',
+    async (req, res) => await Book.getCategoryBooks(req, res)
+);
+
 module.exports = bookRouter;

@@ -46,6 +46,16 @@ class BookController {
         }
     }
 
+    async getCategoryBooks(req, res) {
+        let {categoryId} = req.params;
+        try {
+            const books = await BookModel.find({categoryId}).populate('categoryId');
+            return res.json({books})
+        } catch (e) {
+            console.log("no books")
+        }
+    }
+
 }
 
 const Book = new BookController();
