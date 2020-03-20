@@ -6,7 +6,7 @@ import {checkForAdminToken} from './actions/authActions';
 import store from './store';
 import './App.css';
 import AdminLogin from "./components/AdminAuth/AdminLogin"
-import AdminNavItem from "./components/AdminAuth/AdminNavItem"
+import AdminControl from "./components/AdminAuth/AdminControl"
 
 
 checkForAdminToken()
@@ -17,7 +17,7 @@ class App extends Component {
         <BrowserRouter>
           <div className="App">
           <Route path="/" exact component={AdminLogin}/>
-          <Route path="/admincontrols" exact component={AdminNavItem}/>
+          <Route path="/admincontrols" exact component={AdminControl}/>
         </div>
         </BrowserRouter>
       </Provider>
