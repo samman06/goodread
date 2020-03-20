@@ -19,6 +19,22 @@ class inputsValidation {
         }
     };
 
+    validateAuthorInputs({dateOfBirth, firstName, lastName}) {
+        let errors = {};
+        firstName = !this.isEmpty(firstName) ? firstName : "";
+        lastName = !this.isEmpty(lastName) ? lastName : "";
+        // dateOfBirth = !this.isEmpty(dateOfBirth) ? dateOfBirth : "";
+        if (!validator.isLength(firstName, {min: 3, max: 15}))
+            errors.firstName = "first name must be between 3 and 5 characters";
+        if (!validator.isLength(lastName, {min: 3, max: 15}))
+            errors.lastName = "last name must be between 3 and 5 characters";
+        // if (!validator.isLength(dateOfBirth, {min: 10, max: 100}))
+        //     errors.dateOfBirth = "date of birth must be between 10 and 100 chrachters";
+        return {
+            errors,
+            isValid: this.isEmpty(errors),
+        }
+    }
 
     isEmpty(value) {
         return value === undefined || value === null ||

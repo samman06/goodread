@@ -1,4 +1,5 @@
 const AuthorModel = require('../models/author');
+const validation = require("../validation/inputsValidation");
 
 class AuthorController {
     async getAllAuthors(req, res) {
@@ -12,6 +13,8 @@ class AuthorController {
 
     async addNewAuthor(req, res) {
         if (!req.user.isAdmin) return res.json({msg: 'Un Authorized Access'});
+        const {errors, isValid} = validation.validateAuthorInputs(req.body);
+        if (!isValid) return res.json({errors});
         const {dateOfBirth, photo, description, firstName, lastName} = req.body;
         try {
             let author = await AuthorModel.findOne({firstName, lastName});
