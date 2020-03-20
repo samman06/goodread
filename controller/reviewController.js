@@ -14,6 +14,19 @@ class Reviews {
             return res.json({msg: e});
         }
     }
+
+    async getBookReviews(req, res) {
+        try {
+            const reviews = await Review.find()
+                .populate('bookId')
+                .populate('userId');
+            return res.json(reviews)
+        } catch (e) {
+            return res.json(e);
+        }
+    }
+
+    
 }
 
 const ReviewsController = new Reviews();
