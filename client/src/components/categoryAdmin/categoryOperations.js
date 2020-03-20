@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {getCategories, addCategory, editCategory, deleteCategory} from "../../actions/categoryActions";
-import CategoryItem from "./CategoryItem"
+import CategoryItem from "./CategoryItem";
 
 class CategoryOperations extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class CategoryOperations extends Component {
     }
 
     componentDidMount = async () => await this.props.getCategories();
-
+    deleteCategory = async (id) => await this.props.deleteCategory(id);
     render() {
         const {categories} = this.props.category;
         const {errors} = this.props;
@@ -23,6 +23,7 @@ class CategoryOperations extends Component {
                 
                 <CategoryItem
                     categories={categories}
+                    deleteCategory={this.deleteCategory}
                 />
             </div>
         );

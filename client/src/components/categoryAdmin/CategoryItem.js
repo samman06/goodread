@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {Table} from "reactstrap";
 
 class CategoryItem extends Component {
-
+    deleteCategory = async (id) => await this.props.deleteCategory(id);
     render() {
         const {categories} = this.props;
         let allCategories;
         if (categories) {
             allCategories = categories.map((category, index) =>
-                <tr key={index}>
+                <tr key={category._id}>
                     <td>{index + 1}</td>
                     <td key={index}>
                         {category.name}
@@ -19,7 +19,9 @@ class CategoryItem extends Component {
                         >Edit
                         </button>
                         {" "}
-                        <button value={index} type="button" className="btn btn-danger">Delete
+                        <button value={index} type="button" className="btn btn-danger"
+                        onClick={() => this.deleteCategory(category._id)}
+                        >Delete
                         </button>
                     </td>
                 </tr>);
