@@ -3,17 +3,28 @@ import {Progress} from 'reactstrap';
 import {Link} from "react-router-dom";
 import {connect} from "react-redux"
 import PropTypys from "prop-types"
-import {getBookById, setReadingStatusBookProfile, removeUserBook} from "../../actions/bookActions";
+import {
+    getBookById, setReadingStatusBookProfile, removeUserBook, addReview, getReviews
+} from "../../actions/bookActions";
 import StarRating from "../StarRating";
+import BookReview from "./BookReview"
 import '../../Styles/bookprofile.css';
 
 class BookProfile extends Component {
     constructor(props) {
         super(props);
         this.bookId = this.props.match.params.id;
+        this.state = {
+            review: "",
+        }
     }
 
-    componentDidMount = async () => await this.props.getBookById(this.bookId);
+    componentDidMount = async () => {
+        await this.props.getBookById(this.bookId);
+        await this.props.getReviews(this.bookId);
+    };
+    onChange = ({name, value}) => this.setState({[name]: value});
+
     setReadingStatus = async (rateId, {target}) => {
         let shelve = target.value;
         if (shelve === "Remove") await this.props.removeUserBook(this.bookId, rateId);
@@ -22,9 +33,13 @@ class BookProfile extends Component {
     setRate = async (bookId, rate) => {
         await this.props.setReadingStatusBookProfile(this.bookId, {shelve: "Read", rate, bookId});
     };
+    addReview = async () => {
+        let {review} = this.state;
+        await this.props.addReview(this.bookId, review)
+    }
 
     render() {
-        const {book} = this.props.book;
+        const {book,reviews} = this.props.book;
         let currentBook, rateId, shelveStatus;
         if (book) {
             const {authorId, categoryId, bookUser} = book;
@@ -85,6 +100,12 @@ class BookProfile extends Component {
         return (
             <div className="container-fluid">
                 {currentBook}
+                <BookReview
+                    reviews={reviews}
+                    onChange={this.onChange}
+                    review={this.state.review}
+                    addReview={this.addReview}
+                />
             </div>
         );
     }
@@ -94,7 +115,11 @@ BookProfile.protoTypes = {
     getBookById: PropTypys.func.isRequired,
     setReadingStatusBookProfile: PropTypys.func.isRequired,
     removeUserBook: PropTypys.func.isRequired,
+    addReview: PropTypys.func.isRequired,
+    getReviews: PropTypys.func.isRequired,
 };
 
 const mapStateToProps = ({book}) => ({book});
-export default connect(mapStateToProps, {getBookById, setReadingStatusBookProfile, removeUserBook})(BookProfile);
+export default connect(mapStateToProps, {
+    getBookById, setReadingStatusBookProfile, removeUserBook, addReview, getReviews
+})(BookProfile);

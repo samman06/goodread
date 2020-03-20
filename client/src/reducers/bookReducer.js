@@ -2,14 +2,13 @@ import {
     GET_BOOKS,
     ADD_BOOK,
     GET_BOOK,
+    GET_REVIEWS,
+    ADD_REVIEW,
     BOOKS_LOADING,
-    GET_READ_BOOKS,
     DELETE_BOOK,
-    GET_READING_BOOKS,
-    GET_WILL_READ_BOOKS
 } from "../actions/types";
 
-const initialState = {book: null, books: null, loading: false};
+const initialState = {book: null, books: null, reviews: [], loading: false};
 export default function (state = initialState, action) {
     switch (action.type) {
         case BOOKS_LOADING:
@@ -31,6 +30,18 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 book: action.payload,
+                loading: false
+            };
+        case GET_REVIEWS:
+            return {
+                ...state,
+                reviews: action.payload,
+                loading: false
+            };
+        case ADD_REVIEW:
+            return {
+                ...state,
+                reviews: [...state.reviews, action.payload],
                 loading: false
             };
         case DELETE_BOOK:
