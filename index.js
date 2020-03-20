@@ -24,6 +24,7 @@ mongoose.connect(uri, {useNewUrlParser: true})
     });
 
 app.use(passport.initialize());
+require("./configs/passport")(passport);
 //admin router
 app.use('/admin', adminRouter);
 
