@@ -1,3 +1,4 @@
+const BookModel = require('../models/book');
 const CategoryModel = require('../models/category');
 const validation = require("../validation/inputsValidation");
 
@@ -27,6 +28,15 @@ class CategoryController {
             res.json({err})
         }
 
+    }
+
+    async getBooksCategory({params}, res) {
+        try {
+            const books = await BookModel.find({categoryId: params.id})
+            return res.json(books)
+        } catch (err) {
+            return res.json({err})
+        }
     }
 
 }

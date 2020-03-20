@@ -10,4 +10,8 @@ categoryRouter.post('/',
     passport.authenticate('jwt', {session: false}),
     (req, res) => Category.addNewCategory(req,res));
 
+//get all books from spacafec category
+categoryRouter.get('/:id', (req, res) => Category.getBooksCategory(req,res));
+
+
 module.exports = categoryRouter;
