@@ -35,4 +35,13 @@ bookRouter.get('/category/:categoryId',
     async (req, res) => await Book.getCategoryBooks(req, res)
 );
 
+// update book by id
+bookRouter.put('/:id',
+    passport.authenticate('jwt', {session: false}),
+    upload.single('photo'),
+    async (req, res) =>
+        await Book.updateBookById(req, res)
+);
+
+
 module.exports = bookRouter;

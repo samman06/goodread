@@ -56,6 +56,21 @@ class BookController {
         }
     }
 
+    async updateBookById(req, res) {
+        if (!req.user.isAdmin) return res.status(400).json({msg: 'Un Authorized Access'});
+        const {name, categoryId, authorId, rate, photo} = req.body;
+        const {errors, isValid} = validation.validateBookInputs(name);
+        if (!isValid) return res.json({errors});
+        try {
+            const book = await BookModel.findOneAndUpdate(req.params.id, {
+                photo, name, categoryId, authorId, rate
+            });
+            return res.json({book})
+        } catch (err) {
+            return res.json({err});
+        }
+    }
+
 }
 
 const Book = new BookController();
