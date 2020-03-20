@@ -32,4 +32,15 @@ export const deleteBook = (id) => async (dispatch) => {
         console.log('data not deleted');
     }
 };
+export const editBook = (id, bookData) => async (dispatch) => {
+    try {
+        let {data} = await axios.put(`http://localhost:4000/books/${id}`, bookData);
+        if (!data.message) dispatch({type: GET_ERRORS, payload: data});
+        else await dispatch(getBooks());
+        return data
+    } catch (e) {
+        console.log('data not edited');
+    }
+};
+
 

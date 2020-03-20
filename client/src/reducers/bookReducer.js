@@ -21,6 +21,12 @@ export default function (state = initialState, action) {
                 books: action.payload,
                 loading: false
             };
+        case ADD_BOOK:
+            return {
+                ...state,
+                books: [...state.books, action.payload],
+                loading: false
+            };
         case DELETE_BOOK:
             let books = state.books.filter(({_id}) => _id !== action.payload);
             return {...state, books, loading: false};
@@ -29,5 +35,4 @@ export default function (state = initialState, action) {
     }
 
 }
-
 
