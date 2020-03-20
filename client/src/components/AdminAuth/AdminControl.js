@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {TabContent, TabPane} from "reactstrap";
 import '../../Styles/AdminPanel.css';
-import "../../Styles/AdminPanel.css"
-import AdminNavItem from "./AdminNavItem"
+import AdminNavItem from "./AdminNavItem";
+import CategoryOperations from "../categoryAdmin/categoryOperations";
 
 class AdminControl extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class AdminControl extends Component {
                     <AdminNavItem activeTab={activeTab} onClick={this.toggle}/>
                     <TabContent activeTab={activeTab}>
                         <TabPane tabId="1" className="row">
-                            <div>catefgory section</div>
+                        <CategoryOperations/>
                         </TabPane>
                         <TabPane tabId="2" className="row">
                             <div>book section</div>
