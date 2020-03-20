@@ -11,7 +11,6 @@ class AdminLogin extends Component {
         this.state = {
             email: '',
             password: '',
-            errors:{},
         };
     }
 
@@ -41,6 +40,8 @@ class AdminLogin extends Component {
 
     render() {
         const {email, password} = this.state;
+        const {errors} = this.props;
+        console.log(this.props);
         return (
             <div className='container-fluid'>
                 <div className="row">
@@ -54,7 +55,7 @@ class AdminLogin extends Component {
                                 <TextFieldGroup
                                     placeholder="Email Address"
                                     className="form-control"
-                                    type="email"
+                                    type="email" error={errors.email}
                                     name="email" value={email}
                                     onChange={this.onchange}
                                 />
@@ -63,8 +64,7 @@ class AdminLogin extends Component {
                             <TextFieldGroup
                                 placeholder="Password"
                                 className="form-control"
-                                type="password"
-                                name="password"
+                                type="password" name="password"  error={errors.password}
                                 value={password} onChange={this.onchange}
                             />
                             <button type="submit" className="btn btn-primary">Login</button>
@@ -79,10 +79,12 @@ class AdminLogin extends Component {
 AdminLogin.propTypes = {
     LoginAdmin: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
+    errors: state.errors,
 });
 
 export default connect(mapStateToProps, {LoginAdmin})(AdminLogin);

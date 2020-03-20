@@ -11,7 +11,7 @@ class Admin {
         if (!isValid) return res.json({errors});
         try {
             const user = await UserModel.findOne({email: email});
-            if (!user) return res.status(404).json({errors:{email: 'email not found'}});
+            if (!user) return res.json({errors:{email: 'email not found'}});
             if (user.isAdmin) {
                 const isMached = await bcrypt.compare(password, user.password);
                 if (isMached) {
