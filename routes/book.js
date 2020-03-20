@@ -43,5 +43,11 @@ bookRouter.put('/:id',
         await Book.updateBookById(req, res)
 );
 
+//delete book by id
+bookRouter.delete('/:id',
+    passport.authenticate('jwt', {session: false}),
+    async (req, res) =>
+        await Book.deleteBookById(req, res)
+);
 
 module.exports = bookRouter;

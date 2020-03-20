@@ -71,6 +71,15 @@ class BookController {
         }
     }
 
+    async deleteBookById(req, res) {
+        if (!req.user.isAdmin) return res.status(400).json({msg: 'Un Authorized Access'});
+        try {
+            await BookModel.findByIdAndRemove(req.params.id);
+            return res.json({message: "deleted"})
+        } catch (err) {
+            return res.json({errors: {err}});
+        }
+    }
 }
 
 const Book = new BookController();
