@@ -1,8 +1,4 @@
-import {
-    GET_USER_BOOKS,
-    BOOKS_LOADING,
-    GET_USER_BOOKS_STATUS
-} from "../actions/types";
+import {GET_USER_BOOKS, BOOKS_LOADING, GET_USER_BOOKS_STATUS} from "../actions/types";
 
 const initialState = {books: [], userBooks: [], loading: false};
 export default function (state = initialState, action) {
@@ -25,8 +21,6 @@ export default function (state = initialState, action) {
 }
 
 const filterStatusBooks = (books, status) => {
-    console.log(1);
-    console.log(books);
     books = books.filter(book => {
         console.log(book.shelve);
         if (book.shelve === status)
