@@ -2,3 +2,4 @@
 node_modules/
 package-lock.json
 configs/keys_dev.js
+client/node_modules
