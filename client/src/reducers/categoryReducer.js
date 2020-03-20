@@ -23,6 +23,9 @@ export default function (state = initialState, action) {
                 categories: [...state.categories, action.payload],
                 loading: false
             };
+        case DELETE_CATEGORY:
+            let categories = state.categories.filter(({ _id }) => _id !== action.payload);
+            return { ...state, categories, loading: false };
         default:
             return state;
     }
