@@ -1,8 +1,8 @@
 const BookModel = require('../models/book');
 const CategoryModel = require('../models/category');
+const userBooksModel = require('../models/userBook');
 const AuthorModel = require('../models/author');
 const validation = require("../validation/inputsValidation");
-
 
 class BookController {
 
@@ -15,8 +15,23 @@ class BookController {
         }
     }
 
+    async getAllBooksAndUserRattedBooks(req, res) {
+        const userId = req.user._id;
+        let books = await BookModel.find();
+        let userBooks = await userBooksModel.find({userId}, {userId: 0});
+        let userRattedBook = {};
+        await userBooks.map(book => {
+            userRattedBook[book.bookId] = book;
+        });
+        books = await books.map(({_id, rate, photo, name, categoryId, authorId}) => ({
+            _id, rate, photo, name, categoryId, authorId, userBook: userRattedBook[_id]
+        }));
+
+        return res.json({books})
+    }
+
     async addNewBook(req, res) {
-        if (req.user.isAdmin != true) return res.status(400).json({msg: 'Un Authorized Access'});
+        if (req.user.isAdmin !== true) return res.status(400).json({msg: 'Un Authorized Access'});
         const {name, categoryId, authorId, authorName, photo = ""} = req.body;
         const {errors, isValid} = validation.validateBookInputs(name);
         if (!isValid) return res.json({errors});

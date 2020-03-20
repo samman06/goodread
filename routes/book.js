@@ -11,8 +11,16 @@ const upload = multer({
 
 //get all books
 bookRouter.get('/',
+    passport.authenticate('jwt', {session: false}),
     async (req, res) =>
         await Book.getAllBooks(req, res)
+);
+
+//get all books and user rated books
+bookRouter.get('/user',
+    passport.authenticate('jwt', {session: false}),
+    async (req, res) =>
+        await Book.getAllBooksAndUserRattedBooks(req, res)
 );
 
 //add new book
