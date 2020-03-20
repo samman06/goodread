@@ -5,7 +5,6 @@ const passport = require('passport');
 const {storage, fileFilter} = require('../configs/multr');
 const AuthorController = require("../controller/AuthorController");
 
-
 const upload = multer({
     storage, fileFilter,
     limits: {fileSize: 1024 * 1024 * 5},
@@ -15,7 +14,6 @@ authorRouter.get('/', (req, res) =>
     AuthorController.getAllAuthors(req, res)
 );
 
-
 //add new author
 authorRouter.post('/',
     passport.authenticate('jwt', {session: false}),
@@ -23,5 +21,9 @@ authorRouter.post('/',
     (req, res) => AuthorController.addNewAuthor(req, res)
 );
 
+//get author by id
+authorRouter.get('/:id',
+    (req, res) => AuthorController.getAuthorById(req, res)
+);
 
 module.exports = authorRouter;
