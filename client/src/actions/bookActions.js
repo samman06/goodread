@@ -11,3 +11,17 @@ export const getBooks = () => async (dispatch) => {
         return dispatch({type: GET_BOOKS, payload: []});
     }
 };
+export const addBook = (bookData) => async (dispatch) => {
+    try {
+        console.log(bookData);
+        dispatch({type: CLEAR_ERRORS});
+        const {data} = await axios.post('http://localhost:4000/books/', bookData);
+        console.log(data);
+        if (data.book) dispatch(getBooks());
+        else dispatch({type: GET_ERRORS, payload: data.errors});
+        return data.book
+    } catch (e) {
+        console.log('data will be send later');
+    }
+};
+
