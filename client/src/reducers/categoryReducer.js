@@ -17,6 +17,12 @@ export default function (state = initialState, action) {
                 books: action.payload,
                 loading: false
             };
+        case ADD_CATEGORY:
+            return {
+                ...state,
+                categories: [...state.categories, action.payload],
+                loading: false
+            };
         default:
             return state;
     }

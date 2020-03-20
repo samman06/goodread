@@ -21,3 +21,13 @@ export const getCategoryBooks = (categoryId) => async (dispatch) => {
         return dispatch({ type: GET_CATEGORIES, payload: [] });
     }
 };
+export const addCategory = (authorData) => async (dispatch) => {
+    try {
+        dispatch({ type: CLEAR_ERRORS });
+        const { data } = await axios.post('http://localhost:4000/categories/', authorData);
+        if (data.category) return dispatch({ type: ADD_CATEGORY, payload: data.category });
+        else return dispatch({ type: GET_ERRORS, payload: data.errors });
+    } catch (e) {
+        console.log('data will be send later');
+    }
+};
