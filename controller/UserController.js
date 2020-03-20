@@ -52,6 +52,12 @@ class UserController {
         }
     }
 
+    async getCurrentUser(req, res) {
+        const {_id, firstName, lastName, userName, email, photo, isAdmin} = req.user;
+        const currentUser = {_id, firstName, lastName, userName, email, photo, isAdmin,};
+        res.json(currentUser);
+    }
+
 }
 
 const User = new UserController();

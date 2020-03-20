@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
+const passport = require('passport');
 const User = require("../controller/UserController");
 
 // @route   GET /
@@ -22,6 +23,16 @@ userRouter.post('/signup',
 userRouter.post('/login',
     async (req, res) => User.login(req, res)
 );
+
+// @route   GET /users/current
+// @desc    get the current user
+// @access  private
+userRouter.get(
+    '/current',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => User.getCurrentUser(req, res)
+);
+
 
 
 module.exports = userRouter;
