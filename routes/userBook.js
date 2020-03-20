@@ -14,4 +14,8 @@ userBookRouter.put('/', (req, res) =>
     userBooksController.updateUserBook(req, res)
 );
 
+userBookRouter.delete('/:id', (req, res) =>
+    userBooksController.removeUserBook(req, res)
+);
+
 module.exports = userBookRouter;

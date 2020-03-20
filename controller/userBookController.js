@@ -40,6 +40,14 @@ class UserBooks {
         }
     }
 
+    async removeUserBook(req, res) {
+        try {
+            userBooksModel.findByIdAndRemove(req.params.id);
+            return res.json({msg: "deleted "})
+        } catch (err) {
+            return res.json({msg: err})
+        }
+    }
 }
 
 const userBooksController  = new UserBooks();
