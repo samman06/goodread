@@ -2,10 +2,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../configs/keys');
 const UserModel = require('../models/user');
+const validation = require("../validation/inputsValidation");
 
 class Admin {
     async login({body}, res) {
         const {email, password} = body;
+        const {errors, isValid} = validation.validateLoginInputs(body);
+        if (!isValid) return res.json({errors});
         try {
             const user = await UserModel.findOne({email: email});
             if (!user) return res.status(404).json({errors:{email: 'email not found'}});
