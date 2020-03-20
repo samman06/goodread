@@ -40,6 +40,21 @@ class AuthorController {
             return res.send('error in getting data');
         }
     }
+
+    async updateAuthorById({body, params}, res) {
+        if (!req.user.isAdmin) return res.json({msg: 'Un Authorized Access'});
+        const {errors, isValid} = validation.validateAuthorInputs(body);
+        if (!isValid) return res.json(errors);
+        const {firstName, lastName, dateOfBirth, description, photo} = body;
+        try {
+            await AuthorModel.findOneAndUpdate(params.id, {
+                photo, firstName, lastName, dateOfBirth, description
+            });
+            return res.send({message: 'updated'})
+        } catch (e) {
+            return res.send({error: 'error in update data'});
+        }
+    }
 }
 
 const Author = new AuthorController();

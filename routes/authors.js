@@ -26,4 +26,11 @@ authorRouter.get('/:id',
     (req, res) => AuthorController.getAuthorById(req, res)
 );
 
+// update author by id
+authorRouter.put('/:id',
+    passport.authenticate('jwt', {session: false}), upload.single('photo'),
+    (req, res) => AuthorController.updateAuthorById(req, res)
+);
+
+
 module.exports = authorRouter;
