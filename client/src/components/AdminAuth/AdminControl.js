@@ -4,11 +4,12 @@ import '../../Styles/AdminPanel.css';
 import AdminNavItem from "./AdminNavItem";
 import CategoryOperations from "../categoryAdmin/categoryOperations";
 import AuthorOperations from "../authorAdmin/authorOperations";
+import BookOperations from "../bookAdmin/bookOperations";
 
 class AdminControl extends Component {
     constructor(props) {
         super(props);
-        this.state = {activeTab: '1'};
+        this.state = {activeTab: '2'};
     };
 
     toggle = (activeTab) => {
@@ -30,7 +31,7 @@ class AdminControl extends Component {
                             <CategoryOperations/>
                         </TabPane>
                         <TabPane tabId="2" className="row">
-                            <div>book section</div>
+                            <BookOperations/>
                         </TabPane>
                         <TabPane tabId="3" className="row">
                             <AuthorOperations/>
