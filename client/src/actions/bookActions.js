@@ -24,4 +24,12 @@ export const addBook = (bookData) => async (dispatch) => {
         console.log('data will be send later');
     }
 };
+export const deleteBook = (id) => async (dispatch) => {
+    try {
+        const {data} = await axios.delete(`http://localhost:4000/books/${id}`);
+        if (data.message) return dispatch({type: DELETE_BOOK, payload: id})
+    } catch (e) {
+        console.log('data not deleted');
+    }
+};
 
