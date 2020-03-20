@@ -40,7 +40,6 @@ export const logoutAdmin = () => dispatch => {
     dispatch(setCurrentUser({}));
 };
 
-
 export const checkForAdminToken= ()=>{
     if (localStorage.adminToken) {
         // Set auth token header auth
@@ -48,13 +47,13 @@ export const checkForAdminToken= ()=>{
         // Decode token and get user info and exp
         const decoded = jwt_decode(localStorage.adminToken);
         // Set user and isAuthenticated
-        store.dispatch(setCurrentAdmin(decoded));
+        store.dispatch(setCurrentUser(decoded));
 
         // Check for expired token
         const currentTime = Date.now() / 1000;
         if (decoded.exp < currentTime) {
             // Logout user
-            store.dispatch(logoutUser());
+            store.dispatch(logoutAdmin());
             // TODO: Clear current Profile
             // store.dispatch(clearCurrentProfile());
             // Redirect to login
