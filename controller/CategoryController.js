@@ -52,7 +52,20 @@ class CategoryController {
         }
     }
 
- 
+    async deleteCategoryById(req, res) {
+        if (!req.user.isAdmin) return res.status(400).json({msg: 'Un Authorized Access'});
+        try {
+            await CategoryModel.findByIdAndRemove(req.params.id)
+            try {
+                await BookModel.remove({categoryId: req.params.id})
+            } catch (err) {
+                return res.json({err})
+            }
+            return res.json({message: 'deleted'})
+        } catch (err) {
+            return res.json({err})
+        }
+    }
 }
 
 const Category = new CategoryController();

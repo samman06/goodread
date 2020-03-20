@@ -18,4 +18,9 @@ categoryRouter.put('/:id',
     passport.authenticate('jwt', {session: false}),
     (req, res) => Category.updateCategoryById(req,res));
 
+//delete category by id
+categoryRouter.delete('/:id',
+    passport.authenticate('jwt', {session: false}),
+    (req, res) => Category.deleteCategoryById(req,res));
+
 module.exports = categoryRouter;
