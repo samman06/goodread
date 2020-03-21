@@ -3,6 +3,7 @@ import {TabContent, TabPane} from "reactstrap";
 import '../../Styles/AdminPanel.css';
 import AdminNavItem from "./AdminNavItem";
 import CategoryOperations from "../categoryAdmin/categoryOperations";
+import AuthorOperations from "../authorAdmin/authorOperations";
 
 class AdminControl extends Component {
     constructor(props) {
@@ -26,13 +27,13 @@ class AdminControl extends Component {
                     <AdminNavItem activeTab={activeTab} onClick={this.toggle}/>
                     <TabContent activeTab={activeTab}>
                         <TabPane tabId="1" className="row">
-                        <CategoryOperations/>
+                            <CategoryOperations/>
                         </TabPane>
                         <TabPane tabId="2" className="row">
                             <div>book section</div>
                         </TabPane>
                         <TabPane tabId="3" className="row">
-                        <div>author section</div>
+                            <AuthorOperations/>
                         </TabPane>
                     </TabContent>
                 </div>
