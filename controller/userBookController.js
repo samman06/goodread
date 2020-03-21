@@ -29,11 +29,26 @@ class UserBooks {
         }
     }
 
-    async updateUserBook(req, res) {
+    async updateUserBookById(req, res) {
         const {rateId, shelve, rate} = req.body;
         let userBook = {shelve, rate};
         try {
             await userBooksModel.findByIdAndUpdate(rateId, {...userBook});
+            return res.json({book: "OK"})
+        } catch (err) {
+            return res.json({err})
+        }
+    }
+
+    async updateUserBookByName(req, res) {
+        let userId = req.user._id;
+        const {bookId, shelve, rate} = req.body;
+        let userBook = {shelve, rate};
+        try {
+            await userBooksModel.findOneAndUpdate({bookId,userId}, {...userBook},{
+                new: true,
+                upsert: true
+            });
             return res.json({book: "OK"})
         } catch (err) {
             return res.json({err})
