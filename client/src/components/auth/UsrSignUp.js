@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {registerUser} from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import PopularItems from "./PopularItems"
 
 class UsrSignUp extends Component {
     constructor(props) {
@@ -30,6 +31,7 @@ class UsrSignUp extends Component {
         return (
             <div className='container-fluid'>
                 <div className='row'>
+                    <PopularItems/>
                     <div className='col-lg-4 col-md-4 col-sm-4 col-xs-4 '>
                         <h4>Dont Have an Account ? Create one</h4>
                         <hr/>
