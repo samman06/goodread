@@ -17,8 +17,9 @@ import UsrLogin from "./components/auth/UsrLogin";
 
 import TableContent from "./components/home/TableContent";
 import Categories from "./components/category/categories";
+import CategoryBooks from "./components/category/categoryBooks";
 
-checkForAdminToken()
+checkForAdminToken();
 
 class App extends Component {
     render() {
@@ -36,6 +37,10 @@ class App extends Component {
                         <Route path='/categories' exact component={Nav}/>
                         <Route path='/categories' exact component={Categories}/>
                         <Route path='/categories' exact component={Footer}/>
+
+                        <Route path='/categories/:id/' exact component={Nav}/>
+                        <Route path='/categories/:id/' exact component={CategoryBooks}/>
+                        <Route path='/categories/:id/' exact component={Footer}/>
 
                         <Route path='/' exact component={Footer}/>
                         <Route path="/admin" exact component={AdminLogin}/>
