@@ -32,6 +32,8 @@ export const deleteAuthor = (id) => async (dispatch) => {
 export const editAuthor = (id, userData) => async (dispatch) => {
     try {
         let {data} = await axios.put(`http://localhost:4000/authors/${id}`, userData);
+        console.log(5);
+        console.log(data);
         if (!data.message) dispatch({type: GET_ERRORS, payload: data});
         else dispatch(getAuthors());
         return data

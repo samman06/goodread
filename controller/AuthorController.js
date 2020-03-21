@@ -42,8 +42,8 @@ class AuthorController {
         }
     }
 
-    async updateAuthorById({body, params}, res) {
-        if (!req.user.isAdmin) return res.json({msg: 'Un Authorized Access'});
+    async updateAuthorById({user,body, params}, res) {
+        if (!user.isAdmin) return res.json({msg: 'Un Authorized Access'});
         const {errors, isValid} = validation.validateAuthorInputs(body);
         if (!isValid) return res.json(errors);
         const {firstName, lastName, dateOfBirth, description, photo} = body;

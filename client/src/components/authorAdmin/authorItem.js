@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Table} from "reactstrap";
 
 class authorItem extends Component {
+    editAuthorModal = ({target}) => this.props.editAuthorModal(target);
+
     render() {
         const {authors} = this.props;
         let allAuthors;
@@ -17,11 +19,15 @@ class authorItem extends Component {
                     <th>{author.lastName}</th>
                     <th>{author.dateOfBirth.substr(0, 10)}</th>
                     <th>
-                        <button type="button" className="btn btn-info" name="edit">
+                        <button value={JSON.stringify(author)} type="button"
+                                className="btn btn-info" name="edit"
+                                onClick={this.editAuthorModal}
+                        >
                             Edit
                         </button>
                         {" "}
-                        <button value={index} type="button" className="btn btn-danger">Delete
+                        <button value={index} type="button" className="btn btn-danger">
+                            Delete
                         </button>
                     </th>
                 </tr>
