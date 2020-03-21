@@ -18,6 +18,7 @@ import UsrLogin from "./components/auth/UsrLogin";
 import TableContent from "./components/home/TableContent";
 import Categories from "./components/category/categories";
 import CategoryBooks from "./components/category/categoryBooks";
+import Books from "./components/book/books";
 
 checkForAdminToken();
 
@@ -29,6 +30,7 @@ class App extends Component {
                     <div className="App">
                         <Route path='/' exact component={UsrLogin}/>
                         <Route path='/' exact component={UsrSignUp}/>
+                        <Route path='/' exact component={Footer}/>
 
                         <Route path='/home' exact component={Nav}/>
                         <Route path='/home' exact component={TableContent}/>
@@ -42,7 +44,10 @@ class App extends Component {
                         <Route path='/categories/:id/' exact component={CategoryBooks}/>
                         <Route path='/categories/:id/' exact component={Footer}/>
 
-                        <Route path='/' exact component={Footer}/>
+                        <Route path='/books' exact component={Nav}/>
+                        <Route path='/books' exact component={Books}/>
+                        <Route path='/books' exact component={Footer}/>
+
                         <Route path="/admin" exact component={AdminLogin}/>
                         <Route path="/admincontrols" exact component={AdminControl}/>
                     </div>
