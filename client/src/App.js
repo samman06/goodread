@@ -16,7 +16,7 @@ import UsrSignUp from "./components/auth/UsrSignUp";
 import UsrLogin from "./components/auth/UsrLogin";
 
 import TableContent from "./components/home/TableContent";
-
+import Categories from "./components/category/categories";
 
 checkForAdminToken()
 
@@ -32,6 +32,10 @@ class App extends Component {
                         <Route path='/home' exact component={Nav}/>
                         <Route path='/home' exact component={TableContent}/>
                         <Route path='/home' exact component={Footer}/>
+
+                        <Route path='/categories' exact component={Nav}/>
+                        <Route path='/categories' exact component={Categories}/>
+                        <Route path='/categories' exact component={Footer}/>
 
                         <Route path='/' exact component={Footer}/>
                         <Route path="/admin" exact component={AdminLogin}/>
