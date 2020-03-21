@@ -7,6 +7,7 @@ import store from './store';
 import './App.css';
 
 import Footer from "./components/layout/Footer";
+import Nav from "./components/layout/Nav";
 
 import AdminLogin from "./components/AdminAuth/AdminLogin"
 import AdminControl from "./components/AdminAuth/AdminControl"
@@ -24,6 +25,10 @@ class App extends Component {
                     <div className="App">
                         <Route path='/' exact component={UsrLogin}/>
                         <Route path='/' exact component={UsrSignUp}/>
+
+                        <Route path='/home' exact component={Nav}/>
+                        <Route path='/home' exact component={Footer}/>
+
                         <Route path='/' exact component={Footer}/>
                         <Route path="/admin" exact component={AdminLogin}/>
                         <Route path="/admincontrols" exact component={AdminControl}/>
