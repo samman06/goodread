@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {FormGroup, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
-class openEditModal extends Component {
-    openEditModal = (event) => this.props.openEditModal(event);
+class EditModal extends Component {
+    openEditModal = ({target}) => this.props.openEditModal(target);
     onChange = (event) => this.props.onChange(event);
     editCategory = () => this.props.editCategory();
 
@@ -25,7 +25,7 @@ class openEditModal extends Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <button onClick={this.openEditModal && this.editCategory} color="primary">
+                        <button onClick={this.openEditModal && this.editCategory}>
                             Edit
                         </button>
                         {' '}
@@ -37,4 +37,4 @@ class openEditModal extends Component {
     }
 }
 
-export default openEditModal;
+export default EditModal;

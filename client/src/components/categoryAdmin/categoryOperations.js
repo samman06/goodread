@@ -16,6 +16,7 @@ class CategoryOperations extends Component {
     }
 
     componentDidMount = async () => await this.props.getCategories();
+
     onChange = ({target}) => this.setState({[target.name]: target.value});
     openAddModal = () => {
         const addModal = !this.state.addModal;
@@ -47,7 +48,6 @@ class CategoryOperations extends Component {
         const {name, addModal, editModal} = this.state;
         const {categories} = this.props.category;
         const {errors} = this.props;
-        console.log(errors);
         return (
             <div className="col-sm-12">
                 <AddCategoryModal
