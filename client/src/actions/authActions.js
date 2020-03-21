@@ -39,6 +39,18 @@ export const loginUser = userData => async (dispatch) => {
     }
 };
 
+// Register User
+export const registerUser = (userData) => async dispatch => {
+    try {
+        const {data} = await axios.post('http://localhost:4000/users/signup/', userData);
+        console.log(data);
+        if (data.errors) dispatch({type: GET_ERRORS, payload: data.errors});
+        return data;
+    } catch (err) {
+        dispatch({type: GET_ERRORS, payload: err.response.data})
+    }
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
     return {
