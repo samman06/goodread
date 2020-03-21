@@ -21,6 +21,24 @@ export const LoginAdmin = (userData) => async (dispatch) => {
     }
 };
 
+// Login - Get User Token
+export const loginUser = userData => async (dispatch) => {
+    try {
+        const {data} = await axios.post('http://localhost:4000/users/login/', userData);
+        if (data.token) {
+            localStorage.setItem('userToken', data.token);
+            setAuthToken(data.token);
+            const decoded = jwt_decode(data.token);
+            dispatch(setCurrentUser(decoded));
+        } else {
+            dispatch({type: GET_ERRORS, payload: data.errors})
+        }
+        return data
+    } catch (e) {
+        console.log("no login");
+    }
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
     return {
