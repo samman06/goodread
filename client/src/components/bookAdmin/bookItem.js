@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
 class bookItem extends Component {
+    editBookModal = ({target}) => this.props.editBookModal(target);
+
     render() {
         const {books} = this.props;
         let allBooks;
@@ -18,17 +20,18 @@ class bookItem extends Component {
                     <th>
                         <button value={JSON.stringify(book)} type="button"
                                 className="btn btn-info" name="edit"
-                        >Edit
+                                onClick={this.editBookModal}>
+                            Edit
                         </button>
                         {" "}
-                        <button value={index} type="button" className="btn btn-danger">
-                            Delete
+                        <button value={index} onClick={() => this.deleteBook(book._id)}
+                                type="button" className="btn btn-danger">Delete
                         </button>
                     </th>
                 </tr>)
         }
         return (
-            <table className="table ">
+            <table className="table">
                 <thead>
                 <tr>
                     <th>ID</th>

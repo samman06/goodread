@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Modal, ModalHeader} from "reactstrap";
 
 class addBookModal extends Component {
-    addBookModal = () => this.props.addBookModal();
+    bookModal  = () => this.props.addBookModal();
     onChange = ({target}) => this.props.onChange(target);
     addBook = () => this.props.addBook();
 
@@ -17,11 +17,11 @@ class addBookModal extends Component {
         return (
             <div>
                 <button
-                    onClick={this.addBookModal} className='btn btn-info offset-10 mt-1 mb-1'>
+                    onClick={this.bookModal } className='btn btn-info offset-10 mt-1 mb-1'>
                     Add Book +
                 </button>
-                <Modal isOpen={isOpen} toggle={this.addBookModal}>
-                    <ModalHeader toggle={this.addBookModal}>Add Book</ModalHeader>
+                <Modal isOpen={isOpen} toggle={this.bookModal }>
+                    <ModalHeader toggle={this.bookModal }>Add Book</ModalHeader>
                     <div className="modal-body">
                         <div className="form-group">
                             <input className="form-control" name="name" id="name"
@@ -48,10 +48,10 @@ class addBookModal extends Component {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn-primary mr-1" onClick={this.addBookModal && this.addBook}>
+                        <button className="btn-primary mr-1" onClick={this.bookModal  && this.addBook}>
                             Add Book
                         </button>
-                        <button className="btn-secondary" onClick={this.addBookModal}>
+                        <button className="btn-secondary" onClick={this.bookModal }>
                             Cancel
                         </button>
                     </div>
