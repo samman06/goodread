@@ -57,10 +57,11 @@ class UserBooks {
 
     async removeUserBook(req, res) {
         try {
-            userBooksModel.findByIdAndRemove(req.params.id);
-            return res.json({msg: "deleted "})
+            await userBooksModel.findByIdAndRemove(req.params.id);
+            return res.json({message: "deleted "})
         } catch (err) {
-            return res.json({msg: err})
+            console.log(err);
+            return res.json({err: err})
         }
     }
 }

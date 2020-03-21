@@ -8,47 +8,53 @@ import StarRating from "../StarRating";
 
 class Books extends Component {
     componentDidMount = async () => await this.props.getBooksAndRattedBooks();
-    setRate = async (rateId, rate) => {
-        await this.props.setReadingStatus({shelve: "read", rate, bookId: rateId});
+    setRate = async (rateId, rate, shelve = "Read") => {
+        await this.props.setReadingStatus({shelve, rate, bookId: rateId});
         await this.props.getBooksAndRattedBooks()
+    };
+    setReadingStatus = async (rateId) => {
+        await this.props.setReadingStatus({shelve: "willRead", bookId:rateId});
+        await this.all()
     };
 
     render() {
         const {books} = this.props.book;
         let allBooks;
         if (books) {
-            allBooks = books.map((book, index) =>
-                <div className="thumb" key={index}>
+            allBooks = books.map(({name, _id, photo, shelve, userBook}) =>
+                <div className="thumb" key={_id}>
                     <div className="card">
                         <img style={{width: "100%", height: 100}} alt="book image"
-                             src={"http://localhost:4000/" + book.photo}
+                             src={"http://localhost:4000/" + photo}
                         />
                         <div className="card-body">
-                            <Link to={"http://localhost:4000/" + book.photo}>
-                                {book.name}
+                            <Link to={_id}>
+                                {name}
                             </Link>
-                            {book.userBook &&
+                            {userBook &&
                             <div>
                                 <StarRating
                                     onClick={this.setRate}
-                                    rate={book.userBook.rate || 0} rateId={book._id}
+                                    rate={userBook.rate || 0} rateId={_id}
                                 />
                                 <div className="card-title">
-                                    <button className="btn btn-warning">
-                                        {book.userBook.shelve}
+                                    <button className="btn btn-success">
+                                        {userBook.shelve}
                                     </button>
                                 </div>
                             </div>
                             }
-                            {!book.userBook &&
+                            {!userBook &&
                             <div>
                                 <StarRating
                                     onClick={this.setRate}
-                                    rate={0} rateId={book._id}
+                                    rate={0} rateId={_id}
                                 />
                                 <div className="card-title">
-                                    <button className="btn btn-warning">
-                                        want to read
+                                    <button className="btn btn-warning"
+                                            onClick={() => this.setRate(_id, null, "Will Read")}
+                                    >
+                                        Want To Read
                                     </button>
                                 </div>
                             </div>
@@ -75,4 +81,3 @@ Books.protoTypes = {
 const mapStateToProps = ({book}) => ({book});
 
 export default connect(mapStateToProps, {getBooks, setReadingStatus, getBooksAndRattedBooks})(Books);
-// 60

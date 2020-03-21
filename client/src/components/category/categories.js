@@ -15,7 +15,7 @@ class Categories extends Component {
         if (categories) {
             allCategories = categories.map(({name, _id}) =>
                 <tr key={_id}>
-                    <th><Link to={`/categories/${_id}/`}>{name}</Link></th>
+                    <th><Link to={_id}>{name}</Link></th>
                 </tr>
             )
         }

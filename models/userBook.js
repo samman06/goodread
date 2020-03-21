@@ -10,8 +10,8 @@ const userBookSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "books"
     },
-    shelve: { type: 'String', enum: ['reading', 'wilRead', 'read','not'], default: null },
-    rate: { type: Number, default: null }
+    shelve: {type: 'String', enum: ['Reading', 'Will Read', 'Read'], default: null},
+    rate: {type: Number, default: null}
 });
 
 const UserBook = mongoose.model('userBooks', userBookSchema);

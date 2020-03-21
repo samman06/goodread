@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import {Progress, Table} from 'reactstrap';
 import SideBar from "./SideBar";
 import StarRating from "../StarRating";
-import {getUserBooksStatus, getUserBooks, setReadingStatus} from "../../actions/userBooksActions";
+import {getUserBooksStatus, getUserBooks, removeUserBook,setReadingStatus} from "../../actions/userBooksActions";
 import {Link} from "react-router-dom";
 
 class TableContent extends Component {
@@ -22,11 +22,14 @@ class TableContent extends Component {
 
     setReadingStatus = async (rateId, {target}) => {
         let shelve = target.value;
-        await this.props.setReadingStatus({shelve, rateId});
-        await this.all()
+        if (shelve==="Remove"){
+            await this.props.removeUserBook(this.userId,rateId)
+        }else {
+            await this.props.setReadingStatus(this.userId,{shelve, rateId});
+        }
     };
     setRate = async (rateId, rate) => {
-        await this.props.setReadingStatus({shelve: "read", rate, rateId});
+        await this.props.setReadingStatus({shelve: "Read", rate, rateId});
         await this.all()
     };
 
@@ -65,7 +68,7 @@ class TableContent extends Component {
                         >
                             <option value={shelve}>{shelve}</option>
                             {
-                                (shelveStatus = ['Reading', 'Will Read', 'Read', 'Not']) &&
+                                (shelveStatus = ['Reading', 'Will Read', 'Read', 'Remove']) &&
                                 shelveStatus.splice(shelveStatus.indexOf(shelve), 1) &&
                                 shelveStatus.map(shelve => <option key={shelve} value={shelve}>{shelve}</option>)
                             }
@@ -109,9 +112,10 @@ class TableContent extends Component {
 
 TableContent.protoTypes = {
     getUserBooks: PropTypes.func.isRequired,
+    removeUserBook: PropTypes.func.isRequired,
     getUserBooksStatus: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     userBooks: PropTypes.object.isRequired,
 };
 const mapStateToProps = ({auth, userBooks}) => ({auth, userBooks});
-export default connect(mapStateToProps, {getUserBooks, getUserBooksStatus, setReadingStatus})(TableContent)
+export default connect(mapStateToProps, {getUserBooks, getUserBooksStatus, setReadingStatus,removeUserBook})(TableContent)

@@ -12,11 +12,21 @@ export const getUserBooks = (id) => async (dispatch) => {
     }
 };
 
+export const removeUserBook = (userId,id) => async (dispatch) => {
+    try {
+        const {data} = await axios.delete(`http://localhost:4000/userbook/${id}`);
+        console.log(data);
+        if (data.message) dispatch(getUserBooks(userId));
+    } catch (e) {
+        console.log("No Book 4 U");
+    }
+};
 
-export const setReadingStatus = (userBook) => async (dispatch) => {
+
+export const setReadingStatus = (userId,userBook) => async (dispatch) => {
     try {
         const {data} = await axios.put(`http://localhost:4000/userbook/`, userBook);
-        if (data.book) dispatch(getBooks());
+        if (data.book) dispatch(getUserBooks(userId));
     } catch (e) {
         console.log("No Book 4 U");
     }
