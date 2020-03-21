@@ -1,5 +1,6 @@
-import {GET_BOOKS, ADD_BOOK, BOOKS_LOADING, CLEAR_ERRORS, DELETE_BOOK, GET_ERRORS} from "./types";
+import {GET_BOOKS, ADD_BOOK, BOOKS_LOADING, CLEAR_ERRORS, DELETE_BOOK, GET_ERRORS, GET_BOOK} from "./types";
 import axios from "axios";
+import {getUserBooks} from "./userBooksActions";
 
 export const getBooks = () => async (dispatch) => {
     dispatch({type: BOOKS_LOADING});
@@ -11,6 +12,19 @@ export const getBooks = () => async (dispatch) => {
         return dispatch({type: GET_BOOKS, payload: []});
     }
 };
+export const getBookById = (bookID) => async (dispatch) => {
+    dispatch({type: BOOKS_LOADING});
+    dispatch({type: CLEAR_ERRORS});
+    try {
+        const {data} = await axios.get(`http://localhost:4000/books/${bookID}`);
+        console.log(data);
+        return dispatch({type: GET_BOOK, payload: data.book});
+    } catch (e) {
+        return dispatch({type: GET_BOOKS, payload: []});
+    }
+};
+
+
 export const getBooksAndRattedBooks = () => async (dispatch) => {
     dispatch({type: BOOKS_LOADING});
     dispatch({type: CLEAR_ERRORS});
@@ -53,11 +67,12 @@ export const editBook = (id, bookData) => async (dispatch) => {
     }
 };
 
-export const setReadingStatus = (userBook) => async (dispatch) => {
+export const setReadingStatus = (bookId,userBook) => async (dispatch) => {
     try {
         const {data} = await axios.put(`http://localhost:4000/userbook/book/`, userBook);
         console.log(data);
-        if (data.book) dispatch(getBooks());
+        if(data.book) dispatch(getUserBooks(bookId));
+        return data;
     } catch (e) {
         console.log("No Book 4 U");
     }

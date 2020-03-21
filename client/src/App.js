@@ -19,6 +19,7 @@ import TableContent from "./components/home/TableContent";
 import Categories from "./components/category/categories";
 import CategoryBooks from "./components/category/categoryBooks";
 import Books from "./components/book/books";
+import BookProfile from "./components/book/bookprofil";
 
 checkForAdminToken();
 
@@ -47,6 +48,10 @@ class App extends Component {
                         <Route path='/books' exact component={Nav}/>
                         <Route path='/books' exact component={Books}/>
                         <Route path='/books' exact component={Footer}/>
+
+                        <Route path='/books/:id' exact component={Nav}/>
+                        <Route path='/books/:id' exact component={BookProfile}/>
+                        <Route path='/books/:id' exact component={Footer}/>
 
                         <Route path="/admin" exact component={AdminLogin}/>
                         <Route path="/admincontrols" exact component={AdminControl}/>

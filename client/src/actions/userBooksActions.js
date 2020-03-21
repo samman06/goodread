@@ -1,11 +1,11 @@
 import axios from 'axios';
 import {GET_USER_BOOKS, GET_USER_BOOKS_STATUS} from './types';
-import {getBooks} from "./bookActions";
-
 
 export const getUserBooks = (id) => async (dispatch) => {
     try {
         const {data} = await axios.get(`http://localhost:4000/userbook/${id}`);
+        console.log(1);
+        console.log(data);
         if (data.books) dispatch({type: GET_USER_BOOKS, payload: data.books});
     } catch (e) {
         console.log("No Book 4 U");
@@ -15,7 +15,6 @@ export const getUserBooks = (id) => async (dispatch) => {
 export const removeUserBook = (userId,id) => async (dispatch) => {
     try {
         const {data} = await axios.delete(`http://localhost:4000/userbook/${id}`);
-        console.log(data);
         if (data.message) dispatch(getUserBooks(userId));
     } catch (e) {
         console.log("No Book 4 U");

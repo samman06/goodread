@@ -27,6 +27,12 @@ export default function (state = initialState, action) {
                 books: [...state.books, action.payload],
                 loading: false
             };
+        case GET_BOOK:
+            return {
+                ...state,
+                book: action.payload,
+                loading: false
+            };
         case DELETE_BOOK:
             let books = state.books.filter(({_id}) => _id !== action.payload);
             return {...state, books, loading: false};

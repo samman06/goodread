@@ -36,7 +36,6 @@ class BookController {
         const {errors, isValid} = validation.validateBookInputs(name);
         if (!isValid) return res.json({errors});
         try {
-            console.log(categoryId, name, authorId, authorName);
             const category = await CategoryModel.findById(categoryId);
             if (!category) return res.json({errors: {categoryName: 'this category dose not exist'}});
             const author = await AuthorModel.findOne({authorName});
@@ -54,8 +53,8 @@ class BookController {
 
     async getBookById(req, res) {
         try {
-            const book = await BookModel.findById(req.params.id).populate('authorId').populate('categoryId')
-            return res.json(book)
+            const book = await BookModel.findById(req.params.id).populate('authorId').populate('categoryId');
+            return res.json({book})
         } catch (err) {
             return res.json({msg: err});
         }
