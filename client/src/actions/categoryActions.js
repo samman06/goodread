@@ -23,6 +23,7 @@ export const getCategoryBooks = (categoryId) => async (dispatch) => {
 };
 export const addCategory = (authorData) => async (dispatch) => {
     try {
+        console.log(axios.defaults.headers.common['Authorization'])
         dispatch({ type: CLEAR_ERRORS });
         const { data } = await axios.post('http://localhost:4000/categories/', authorData);
         if (data.category) return dispatch({ type: ADD_CATEGORY, payload: data.category });

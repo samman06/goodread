@@ -16,7 +16,7 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div className="App">
-          <Route path="/" exact component={AdminLogin}/>
+          <Route path="/admin" exact component={AdminLogin}/>
           <Route path="/admincontrols" exact component={AdminControl}/>
         </div>
         </BrowserRouter>
