@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import PropTypes from "prop-types"
-import {Progress} from 'reactstrap';
+import {Progress, Table} from 'reactstrap';
 import SideBar from "./SideBar";
-import {Link} from "react-router-dom";
-
+import StarRating from "../StarRating";
 import {getUserBooksStatus, getUserBooks, setReadingStatus} from "../../actions/userBooksActions";
-
+import {Link} from "react-router-dom";
 
 class TableContent extends Component {
     constructor(props) {
@@ -15,15 +14,25 @@ class TableContent extends Component {
     }
 
     componentDidMount = async () => await this.props.getUserBooks(this.userId);
-    all = async () => await this.props.getUserBooks(this.userId);
-    read = async () => console.log("read");
-    currentlyRead = async () => console.log("current");
-    wantToRead = async () => console.log("willRead");
 
+    all = async () => await this.props.getUserBooks(this.userId);
+    read = async () => await this.props.getUserBooksStatus(this.userId, "read");
+    currentlyRead = async () => await this.props.getUserBooksStatus(this.userId, "reading");
+    wantToRead = async () => await this.props.getUserBooksStatus(this.userId, "willRead");
+
+    setReadingStatus = async (rateId, {target}) => {
+        let shelve = target.value;
+        await this.props.setReadingStatus({shelve, rateId});
+        await this.all()
+    };
+    setRate = async (rateId, rate) => {
+        await this.props.setReadingStatus({shelve: "read", rate, rateId});
+        await this.all()
+    };
 
     render() {
         const {books} = this.props.userBooks;
-        let currentBooks;
+        let shelveStatus, currentBooks;
         if (books) {
             currentBooks = books.map(({shelve, _id, bookId, rate}, index) =>
                 <tr key={_id}>
@@ -45,7 +54,21 @@ class TableContent extends Component {
                         <Progress value={rate}/>
                     </td>
                     <td>
-                        <select className="form-control" name="status">
+                        <StarRating
+                            onClick={this.setRate}
+                            rate={rate || 0} rateId={_id}
+                        />
+                    </td>
+                    <td>
+                        <select className="form-control" name="status"
+                                onChange={(event) => this.setReadingStatus(_id, event)}
+                        >
+                            <option value={shelve}>{shelve}</option>
+                            {
+                                (shelveStatus = ['Reading', 'Will Read', 'Read', 'Not']) &&
+                                shelveStatus.splice(shelveStatus.indexOf(shelve), 1) &&
+                                shelveStatus.map(shelve => <option key={shelve} value={shelve}>{shelve}</option>)
+                            }
                         </select>
                     </td>
                 </tr>
@@ -61,7 +84,7 @@ class TableContent extends Component {
                         />
                     </div>
                     <div className="col-lg-9">
-                        <table className="table">
+                        <Table>
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -76,7 +99,7 @@ class TableContent extends Component {
                             <tbody>
                             {currentBooks}
                             </tbody>
-                        </table>
+                        </Table>
                     </div>
                 </div>
             </div>
@@ -90,6 +113,5 @@ TableContent.protoTypes = {
     auth: PropTypes.object.isRequired,
     userBooks: PropTypes.object.isRequired,
 };
-
 const mapStateToProps = ({auth, userBooks}) => ({auth, userBooks});
-export default connect(mapStateToProps, {getUserBooksStatus, getUserBooks, setReadingStatus})(TableContent)
+export default connect(mapStateToProps, {getUserBooks, getUserBooksStatus, setReadingStatus})(TableContent)
