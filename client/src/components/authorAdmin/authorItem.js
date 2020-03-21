@@ -3,6 +3,7 @@ import {Table} from "reactstrap";
 
 class authorItem extends Component {
     editAuthorModal = ({target}) => this.props.editAuthorModal(target);
+    deleteAuthor = async (id) => await this.props.deleteAuthor(id);
 
     render() {
         const {authors} = this.props;
@@ -26,7 +27,9 @@ class authorItem extends Component {
                             Edit
                         </button>
                         {" "}
-                        <button value={index} type="button" className="btn btn-danger">
+                        <button value={index} type="button" className="btn btn-danger"
+                                onClick={() => this.deleteAuthor(author._id)}
+                        >
                             Delete
                         </button>
                     </th>

@@ -42,16 +42,15 @@ class AuthorOperations extends Component {
         const {firstName, lastName, dateOfBirth, photo, authorId} = this.state;
         let authorData = {firstName, lastName, dateOfBirth, photo};
         const {message} = await this.props.editAuthor(authorId, authorData);
-        console.log(message);
         if (message)
             this.setState({authorId: "", firstName: "", lastName: "", dateOfBirth: "", photo: "", editModal: false});
     };
+    deleteAuthor = async (id) => await this.props.deleteAuthor(id);
 
     render() {
         const {firstName, lastName, dateOfBirth, editModal, addModal} = this.state;
         const {authors} = this.props.author;
         const {errors} = this.props;
-        console.log(editModal);
         return (
             <div className="col-sm-12">
                 <AddAuthorModal
@@ -70,6 +69,7 @@ class AuthorOperations extends Component {
                 <AuthorItem
                     authors={authors}
                     editAuthorModal={this.editAuthorModal}
+                    deleteAuthor={this.deleteAuthor}
                 />
             </div>
         );
