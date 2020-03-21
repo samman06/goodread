@@ -29,3 +29,13 @@ export const deleteAuthor = (id) => async (dispatch) => {
         console.log('data not deleted');
     }
 };
+export const editAuthor = (id, userData) => async (dispatch) => {
+    try {
+        let {data} = await axios.put(`http://localhost:4000/authors/${id}`, userData);
+        if (!data.message) dispatch({type: GET_ERRORS, payload: data});
+        else dispatch(getAuthors());
+        return data
+    } catch (e) {
+        console.log('data not edited');
+    }
+};
