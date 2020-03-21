@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
 const UsersModel = require('../models/user');
 const validation = require("../validation/inputsValidation");
-
+const jwt = require('jsonwebtoken');
+const keys = require('../configs/keys');
 class UserController {
     
     async getAllUsers(req, res) {
