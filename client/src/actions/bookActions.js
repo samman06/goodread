@@ -67,13 +67,12 @@ export const editBook = (id, bookData) => async (dispatch) => {
     }
 };
 
-export const setReadingStatus = (bookId,userBook) => async (dispatch) => {
+export const setReadingStatus = (userBook) =>async (dispatch) => {
     try {
         const {data} = await axios.put(`http://localhost:4000/userbook/book/`, userBook);
-        console.log(data);
-        if(data.book) dispatch(getUserBooks(bookId));
-        return data;
+        if (data.book)dispatch(getBooksAndRattedBooks());
     } catch (e) {
+        console.log(e);
         console.log("No Book 4 U");
     }
 };

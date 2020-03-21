@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import {Progress, Table} from 'reactstrap';
 import SideBar from "./SideBar";
 import StarRating from "../StarRating";
-import {getUserBooksStatus, getUserBooks, removeUserBook,setReadingStatus} from "../../actions/userBooksActions";
+import {getUserBooksStatus, getUserBooks, removeUserBook, setReadingStatus} from "../../actions/userBooksActions";
 import {Link} from "react-router-dom";
 
 class TableContent extends Component {
@@ -14,23 +14,17 @@ class TableContent extends Component {
     }
 
     componentDidMount = async () => await this.props.getUserBooks(this.userId);
-
     all = async () => await this.props.getUserBooks(this.userId);
     read = async () => await this.props.getUserBooksStatus(this.userId, "read");
     currentlyRead = async () => await this.props.getUserBooksStatus(this.userId, "Reading");
     wantToRead = async () => await this.props.getUserBooksStatus(this.userId, "willRead");
-
     setReadingStatus = async (rateId, {target}) => {
         let shelve = target.value;
-        if (shelve==="Remove"){
-            await this.props.removeUserBook(this.userId,rateId)
-        }else {
-            await this.props.setReadingStatus(this.userId,{shelve, rateId});
-        }
+        if (shelve === "Remove") await this.props.removeUserBook(this.userId, rateId);
+        else await this.props.setReadingStatus(this.userId, {shelve, rateId});
     };
     setRate = async (rateId, rate) => {
-        await this.props.setReadingStatus({shelve: "Read", rate, rateId});
-        await this.all()
+        await this.props.setReadingStatus(this.userId, {shelve: "Read", rate, rateId});
     };
 
     render() {
@@ -118,4 +112,6 @@ TableContent.protoTypes = {
     userBooks: PropTypes.object.isRequired,
 };
 const mapStateToProps = ({auth, userBooks}) => ({auth, userBooks});
-export default connect(mapStateToProps, {getUserBooks, getUserBooksStatus, setReadingStatus,removeUserBook})(TableContent)
+export default connect(mapStateToProps,
+    {getUserBooks, getUserBooksStatus, setReadingStatus, removeUserBook}
+)(TableContent)
