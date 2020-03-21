@@ -24,6 +24,7 @@ export const addAuthor = (authorData) => async (dispatch) => {
 export const deleteAuthor = (id) => async (dispatch) => {
     try {
         const {data} = await axios.delete(`http://localhost:4000/authors/${id}`);
+        console.log(data);
         if (data.message) return dispatch({type: DELETE_AUTHOR, payload: id})
     } catch (e) {
         console.log('data not deleted');

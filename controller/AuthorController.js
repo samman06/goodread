@@ -58,6 +58,7 @@ class AuthorController {
     }
 
     async deleteAuthorById({user, params}, res) {
+        console.log(1);
         if (!user.isAdmin) return res.json({msg: 'Un Authorized Access'});
         try {
             await AuthorModel.findByIdAndRemove(params.id);

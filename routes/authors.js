@@ -35,7 +35,7 @@ authorRouter.put('/:id',
 
 //delete author by id
 authorRouter.delete('/:id',
-    // passport.authenticate('jwt', {session: false}),
+    passport.authenticate('jwt', {session: false}),
     (req, res) => AuthorController.deleteAuthorById(req, res)
 );
 
