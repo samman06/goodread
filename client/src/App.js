@@ -9,6 +9,7 @@ import AdminLogin from "./components/AdminAuth/AdminLogin"
 import AdminControl from "./components/AdminAuth/AdminControl"
 
 import UsrSignUp from "./components/auth/UsrSignUp";
+import UsrLogin from "./components/auth/UsrLogin";
 
 checkForAdminToken()
 
@@ -18,6 +19,7 @@ class App extends Component {
             <Provider store={store}>
                 <BrowserRouter>
                     <div className="App">
+                        <Route path='/' exact component={UsrLogin}/>
                         <Route path='/' exact component={UsrSignUp}/>
                         <Route path="/admin" exact component={AdminLogin}/>
                         <Route path="/admincontrols" exact component={AdminControl}/>
