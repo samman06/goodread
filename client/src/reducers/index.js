@@ -4,6 +4,7 @@ import errorReducer from './errorReducer';
 import categoryReducer from './categoryReducer';
 import authorReducer from './authorReducer';
 import bookReducer from './bookReducer';
+import userBooksReducer from './userBooksReducer';
 
 
 export default combineReducers({
@@ -12,4 +13,5 @@ export default combineReducers({
     category:categoryReducer,
     author:authorReducer,
     book:bookReducer,
+    userBooks:userBooksReducer,
 });
