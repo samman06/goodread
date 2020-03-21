@@ -58,6 +58,11 @@ class BookOperations extends Component {
             });
         }
     };
+    deleteBook = async (id) => {
+        const {message} = await this.props.deleteBook(id);
+        const books = await this.state.books.filter(({_id}) => _id !== id);
+        if (message) this.setState({books});
+    };
     render() {
         const {name, categoryId, authorId, addModal, editModal} = this.state;
         const {books} = this.props.book;
@@ -85,6 +90,7 @@ class BookOperations extends Component {
                     <BookItem
                         books={books}
                         editBookModal={this.editBookModal}
+                        deleteBook={this.deleteBook}
                     />
                 </div>
             </div>

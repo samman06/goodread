@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 class bookItem extends Component {
     editBookModal = ({target}) => this.props.editBookModal(target);
+    deleteBook = async (id) => await this.props.deleteBook(id);
 
     render() {
         const {books} = this.props;
