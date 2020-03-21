@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux"
 import PropTypes from "prop-types"
 import {getAuthors, editAuthor, addAuthor, deleteAuthor} from "../../actions/authorActions";
+import AddAuthorModal from "./addAuthorModal"
 import AuthorItem from "./authorItem"
 
 class AuthorOperations extends Component {
@@ -14,11 +15,31 @@ class AuthorOperations extends Component {
     }
 
     componentDidMount = async () => await this.props.getAuthors();
+    onChange = (target) => this.setState({[target.name]: target.value});
+
+    addAuthorModal = () => {
+        let addModal = !this.state.addModal;
+        this.setState({addModal});
+    };
+    addAuthor = async () => {
+        const {firstName, lastName, dateOfBirth, photo} = this.state;
+        const {payload} = await this.props.addAuthor({firstName, lastName, dateOfBirth, photo});
+        if (payload._id) this.setState({firstName: "", lastName: "", dateOfBirth: "", photo: "", addModal: false});
+    };
 
     render() {
+        const {addModal} = this.state;
         const {authors} = this.props.author;
+        const {errors} = this.props;
+
         return (
             <div className="col-sm-12">
+                <AddAuthorModal
+                    onChange={this.onChange}
+                    isOpen={addModal} errors={errors}
+                    addAuthorModal={this.addAuthorModal}
+                    addAuthor={this.addAuthor}
+                />
                 <AuthorItem
                     authors={authors}
                 />
