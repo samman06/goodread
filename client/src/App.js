@@ -15,6 +15,9 @@ import AdminControl from "./components/AdminAuth/AdminControl"
 import UsrSignUp from "./components/auth/UsrSignUp";
 import UsrLogin from "./components/auth/UsrLogin";
 
+import TableContent from "./components/home/TableContent";
+
+
 checkForAdminToken()
 
 class App extends Component {
@@ -27,6 +30,7 @@ class App extends Component {
                         <Route path='/' exact component={UsrSignUp}/>
 
                         <Route path='/home' exact component={Nav}/>
+                        <Route path='/home' exact component={TableContent}/>
                         <Route path='/home' exact component={Footer}/>
 
                         <Route path='/' exact component={Footer}/>
