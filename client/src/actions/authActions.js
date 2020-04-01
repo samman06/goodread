@@ -59,11 +59,20 @@ export const setCurrentUser = decoded => {
     };
 };
 
-
 // Log user out
 export const logoutAdmin = () => dispatch => {
     // Remove token from localStorage
     localStorage.removeItem('adminToken');
+    // Remove auth header for future requests
+    setAuthToken(false);
+    // Set current user to {} which will set isAuthenticated to false
+    dispatch(setCurrentUser({}));
+};
+
+// Log user out
+export const logoutUser = () => dispatch => {
+    // Remove token from localStorage
+    localStorage.removeItem('userToken');
     // Remove auth header for future requests
     setAuthToken(false);
     // Set current user to {} which will set isAuthenticated to false
@@ -88,6 +97,28 @@ export const checkForAdminToken= ()=>{
             // store.dispatch(clearCurrentProfile());
             // Redirect to login
             window.location.href = '/admin';
+        }
+    }
+};
+
+export const checkForUserToken= ()=>{
+    if (localStorage.userToken) {
+        // Set auth token header auth
+        setAuthToken(localStorage.userToken);
+        // Decode token and get user info and exp
+        const decoded = jwt_decode(localStorage.userToken);
+        // Set user and isAuthenticated
+        store.dispatch(setCurrentUser(decoded));
+
+        // Check for expired token
+        const currentTime = Date.now() / 1000;
+        if (decoded.exp < currentTime) {
+            // Logout user
+            store.dispatch(logoutUser());
+            // TODO: Clear current Profile
+            // store.dispatch(clearCurrentProfile());
+            // Redirect to login
+            window.location.href = '/';
         }
     }
 };

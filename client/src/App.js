@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from "react-router-dom";
 import {Provider} from 'react-redux';
-import {checkForAdminToken} from './actions/authActions';
+import {checkForAdminToken,checkForUserToken} from './actions/authActions';
 
 import store from './store';
 import './App.css';
@@ -25,8 +25,8 @@ import BookProfile from "./components/book/bookprofil";
 import Authors from "./components/author/authors";
 import AuthorProfile from "./components/author/authorprofile";
 
-checkForAdminToken();
-
+// checkForAdminToken();
+checkForUserToken()
 class App extends Component {
     render() {
         return (
