@@ -23,6 +23,7 @@ import Books from "./components/book/books";
 import BookProfile from "./components/book/bookprofil";
 
 import Authors from "./components/author/authors";
+import AuthorProfile from "./components/author/authorprofile";
 
 checkForAdminToken();
 
@@ -52,20 +53,23 @@ class App extends Component {
                         <Route path='/books' exact component={Books}/>
                         <Route path='/books' exact component={Footer}/>
 
+                        <Route path='/books/:id' exact component={Nav}/>
+                        <Route path='/books/:id' exact component={BookProfile}/>
+                        <Route path='/books/:id' exact component={Footer}/>
+
                         <Route path='/authors' exact component={Nav}/>
                         <Route path='/authors' exact component={Authors}/>
                         <Route path='/authors' exact component={Footer}/>
 
-                        <Route path='/books/:id' exact component={Nav}/>
-                        <Route path='/books/:id' exact component={BookProfile}/>
-                        <Route path='/books/:id' exact component={Footer}/>
+                        <Route path='/authors/:id' exact component={Nav}/>
+                        <Route path='/authors/:id' exact component={AuthorProfile}/>
+                        <Route path='/authors/:id' exact component={Footer}/>
 
                         <Route path="/admin" exact component={AdminLogin}/>
                         <Route path="/admincontrols" exact component={AdminControl}/>
                     </div>
                 </BrowserRouter>
             </Provider>
-
         );
     }
 }

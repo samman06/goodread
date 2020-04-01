@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {ADD_AUTHOR, GET_AUTHORS, AUTHORS_LOADING, GET_ERRORS, CLEAR_ERRORS, DELETE_AUTHOR} from "./types";
+import {ADD_AUTHOR, GET_AUTHORS, AUTHORS_LOADING, GET_ERRORS, CLEAR_ERRORS, DELETE_AUTHOR, GET_AUTHOR} from "./types";
 
 export const getAuthors = () => async (dispatch) => {
     dispatch({type: AUTHORS_LOADING});
@@ -11,6 +11,17 @@ export const getAuthors = () => async (dispatch) => {
         return dispatch({type: GET_AUTHORS, payload: []});
     }
 };
+
+export const getAuthorById = (authorID) => async (dispatch) => {
+    try {
+        const {data} = await axios.get(`http://localhost:4000/authors/${authorID}`);
+        return dispatch({type: GET_AUTHOR, payload: data.author});
+    } catch (e) {
+        return dispatch({type: GET_AUTHORS, payload: []});
+    }
+};
+
+
 export const addAuthor = (authorData) => async (dispatch) => {
     try {
         dispatch({type: CLEAR_ERRORS});
@@ -24,7 +35,6 @@ export const addAuthor = (authorData) => async (dispatch) => {
 export const deleteAuthor = (id) => async (dispatch) => {
     try {
         const {data} = await axios.delete(`http://localhost:4000/authors/${id}`);
-        console.log(data);
         if (data.message) return dispatch({type: DELETE_AUTHOR, payload: id})
     } catch (e) {
         console.log('data not deleted');
@@ -33,8 +43,6 @@ export const deleteAuthor = (id) => async (dispatch) => {
 export const editAuthor = (id, userData) => async (dispatch) => {
     try {
         let {data} = await axios.put(`http://localhost:4000/authors/${id}`, userData);
-        console.log(5);
-        console.log(data);
         if (!data.message) dispatch({type: GET_ERRORS, payload: data});
         else dispatch(getAuthors());
         return data

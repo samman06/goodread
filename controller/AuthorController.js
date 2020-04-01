@@ -36,7 +36,7 @@ class AuthorController {
     async getAuthorById({params}, res) {
         try {
             const author = await AuthorModel.findById(params.id);
-            return res.send(author)
+            return res.send({author})
         } catch (e) {
             return res.send('error in getting data');
         }
