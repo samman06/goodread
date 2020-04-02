@@ -1,6 +1,6 @@
 import {GET_BOOKS, ADD_BOOK, GET_BOOK, GET_REVIEWS, ADD_REVIEW, BOOKS_LOADING, DELETE_BOOK} from "../actions/types";
 
-const initialState = {book: null, books: null, reviews: [], loading: false};
+const initialState = {book: null, books: null, loading: false};
 export default function (state = initialState, action) {
     switch (action.type) {
         case BOOKS_LOADING:

@@ -74,6 +74,16 @@ class BookController {
         }
     }
 
+    async getAuthorBooks(req, res) {
+        let {authorId} = req.params;
+        try {
+            const books = await BookModel.find({authorId});
+            return res.json({books})
+        } catch (e) {
+            console.log("no books")
+        }
+    }
+
     async updateBookById(req, res) {
         if (!req.user.isAdmin) return res.status(400).json({msg: 'Un Authorized Access'});
         const {name, categoryId, authorId, rate, photo} = req.body;

@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types"
 import '../../Styles/bookprofile.css';
 import {getAuthorById} from "../../actions/authorActions";
+import AuthorBooks from "./authorBooks";
 
 class AuthorProfile extends Component {
     constructor(props) {
@@ -35,6 +36,9 @@ class AuthorProfile extends Component {
         return (
             <div className="container-fluid">
                 {currentAuthor}
+                <AuthorBooks
+                    authorId={this.authorId}
+                />
             </div>
         );
     }

@@ -11,12 +11,24 @@ export const getBooks = () => async (dispatch) => {
         return dispatch({type: GET_BOOKS, payload: []});
     }
 };
+
 export const getBookById = (bookID) => async (dispatch) => {
     dispatch({type: BOOKS_LOADING});
     dispatch({type: CLEAR_ERRORS});
     try {
         const {data} = await axios.get(`http://localhost:4000/books/${bookID}`);
         return dispatch({type: GET_BOOK, payload: data.book});
+    } catch (e) {
+        return dispatch({type: GET_BOOKS, payload: []});
+    }
+};
+
+export const getAuthorBooks = (authorId) => async (dispatch) => {
+    dispatch({type: BOOKS_LOADING});
+    dispatch({type: CLEAR_ERRORS});
+    try {
+        const {data} = await axios.get(`http://localhost:4000/books/author/${authorId}`);
+        return dispatch({type: GET_BOOKS, payload: data.books});
     } catch (e) {
         return dispatch({type: GET_BOOKS, payload: []});
     }

@@ -17,7 +17,7 @@ class TableContent extends Component {
     all = async () => await this.props.getUserBooks(this.userId);
     read = async () => await this.props.getUserBooksStatus(this.userId, "Read");
     currentlyRead = async () => await this.props.getUserBooksStatus(this.userId, "Reading");
-    wantToRead = async () => await this.props.getUserBooksStatus(this.userId, "willRead");
+    wantToRead = async () => await this.props.getUserBooksStatus(this.userId, "Will Read");
     setReadingStatus = async (rateId, {target}) => {
         let shelve = target.value;
         if (shelve === "Remove") await this.props.removeUserBook(this.userId, rateId);
