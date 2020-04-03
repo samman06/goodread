@@ -35,6 +35,15 @@ export const getAuthorBooks = (authorId) => async (dispatch) => {
 };
 
 
+export const setRateAndGetAuthorBooks = (userBook, authorId) => async (dispatch) => {
+    try {
+        const {data} = await axios.put(`http://localhost:4000/userbook/book/`, userBook);
+        if (data.book) dispatch(getAuthorBooks(authorId));
+    } catch (e) {
+        console.log("No Book 4 U");
+    }
+};
+
 export const getBooksAndRattedBooks = () => async (dispatch) => {
     dispatch({type: BOOKS_LOADING});
     dispatch({type: CLEAR_ERRORS});
@@ -75,6 +84,14 @@ export const editBook = (id, bookData) => async (dispatch) => {
     }
 };
 
+export const setReadingStatusAndGetAuthorBooks = (userBook, authorId) => async (dispatch) => {
+    try {
+        const {data} = await axios.put(`http://localhost:4000/userbook/book/`, userBook);
+        if (data.book) dispatch(getAuthorBooks(authorId));
+    } catch (e) {
+        console.log("No Book 4 U");
+    }
+};
 export const setReadingStatus = (userBook) => async (dispatch) => {
     try {
         const {data} = await axios.put(`http://localhost:4000/userbook/book/`, userBook);
@@ -96,6 +113,14 @@ export const removeUserBook = (bookId, id) => async (dispatch) => {
     try {
         const {data} = await axios.delete(`http://localhost:4000/userbook/${id}`);
         if (data.message) dispatch(getBookById(bookId));
+    } catch (e) {
+        console.log("No Book 4 U");
+    }
+};
+export const removeUserBookAndGetAuthorBooks = (authorId, id) => async (dispatch) => {
+    try {
+        const {data} = await axios.delete(`http://localhost:4000/userbook/${id}`);
+        if (data.message) dispatch(getAuthorBooks(authorId));
     } catch (e) {
         console.log("No Book 4 U");
     }

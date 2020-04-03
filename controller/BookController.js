@@ -75,9 +75,19 @@ class BookController {
     }
 
     async getAuthorBooks(req, res) {
+        const userId = req.user._id;
         let {authorId} = req.params;
         try {
-            const books = await BookModel.find({authorId});
+            let books = await BookModel.find({authorId});
+            const bookIds = books.map(({_id}) => _id);
+            let userBooks = await userBooksModel.find({userId, bookId: {$in: bookIds}}, {userId: 0});
+            let userRattedBook = {};
+            await userBooks.map(book => {
+                userRattedBook[book.bookId] = book;
+            });
+            books = await books.map(({_id, rate, photo, name, categoryId, authorId}) => ({
+                _id, rate, photo, name, categoryId, authorId, userBook: userRattedBook[_id]
+            }));
             return res.json({books})
         } catch (e) {
             console.log("no books")
