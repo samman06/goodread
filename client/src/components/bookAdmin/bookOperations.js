@@ -22,7 +22,13 @@ class BookOperations extends Component {
         await this.props.getCategories();
         await this.props.getAuthors();
     };
-    onChange = (target) => this.setState({[target.name]: target.value});
+    onChange = (target) => {
+        if (target.files) {
+            this.setState({photo: target.files[0]});
+        } else {
+            this.setState({[target.name]: target.value});
+        }
+    };
     addBookModal = async () => {
         const addModal = !this.state.addModal;
         this.setState({addModal})
@@ -39,9 +45,13 @@ class BookOperations extends Component {
         this.setState({editModal});
     };
     addBook = async () => {
+        let newBook = new FormData();
         const {name, categoryId, authorId, photo} = this.state;
-        console.log(categoryId);
-        const book = await this.props.addBook({name, categoryId, authorId, photo});
+        newBook.append("name", name);
+        newBook.append("categoryId", categoryId);
+        newBook.append("authorId", authorId);
+        newBook.append("photo", photo);
+        const book = await this.props.addBook(newBook);
         if (book) this.setState({name: "", photo: "", addModal: false});
     };
     editBook = async () => {
@@ -58,11 +68,8 @@ class BookOperations extends Component {
             });
         }
     };
-    deleteBook = async (id) => {
-        const {message} = await this.props.deleteBook(id);
-        const books = await this.state.books.filter(({_id}) => _id !== id);
-        if (message) this.setState({books});
-    };
+    deleteBook = async (id) => await this.props.deleteBook(id);
+
     render() {
         const {name, categoryId, authorId, addModal, editModal} = this.state;
         const {books} = this.props.book;

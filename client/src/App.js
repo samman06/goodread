@@ -25,8 +25,8 @@ import BookProfile from "./components/book/bookprofil";
 import Authors from "./components/author/authors";
 import AuthorProfile from "./components/author/authorprofile";
 
-// checkForAdminToken();
-checkForUserToken()
+checkForAdminToken();
+// checkForUserToken()
 class App extends Component {
     render() {
         return (

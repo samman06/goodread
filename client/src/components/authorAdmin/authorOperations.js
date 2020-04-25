@@ -11,12 +11,18 @@ class AuthorOperations extends Component {
         super(props);
         this.state = {
             addModal: false, editModal: false, firstName: "",
-            lastName: "", dateOfBirth: "", photo: "", authorId: "",
+            lastName: "", dateOfBirth: "", photo: {}, authorId: "",
         };
     }
 
     componentDidMount = async () => await this.props.getAuthors();
-    onChange = (target) => this.setState({[target.name]: target.value});
+    onChange = (target) => {
+        if (target.files) {
+            this.setState({photo: target.files[0]});
+        } else {
+            this.setState({[target.name]: target.value});
+        }
+    };
     parseAuthorData = async (target) => {
         if (target.name === "edit") {
             const {_id, firstName, lastName, dateOfBirth, photo} = await JSON.parse(target.value);
@@ -34,8 +40,13 @@ class AuthorOperations extends Component {
         this.setState({addModal});
     };
     addAuthor = async () => {
+        let author = new FormData();
         const {firstName, lastName, dateOfBirth, photo} = this.state;
-        const {payload} = await this.props.addAuthor({firstName, lastName, dateOfBirth, photo});
+        author.append("firstName", firstName);
+        author.append("lastName", lastName);
+        author.append("dateOfBirth", dateOfBirth);
+        author.append("photo", photo);
+        const {payload} = await this.props.addAuthor(author);
         if (payload._id) this.setState({firstName: "", lastName: "", dateOfBirth: "", photo: "", addModal: false});
     };
     editAuthor = async () => {

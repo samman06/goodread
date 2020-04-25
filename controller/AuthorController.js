@@ -16,7 +16,8 @@ class AuthorController {
         if (!req.user.isAdmin) return res.json({msg: 'Un Authorized Access'});
         const {errors, isValid} = validation.validateAuthorInputs(req.body);
         if (!isValid) return res.json({errors});
-        const {dateOfBirth, photo, description, firstName, lastName} = req.body;
+        const {dateOfBirth,  description, firstName, lastName} = req.body;
+        const photo = req.file.path;
         try {
             let author = await AuthorModel.findOne({firstName, lastName});
             if (author) return res.json({errors: {firstName: 'author already exists'}});
@@ -26,7 +27,6 @@ class AuthorController {
                 description: description || ''
             });
             author = await newAuthor.save();
-            console.log(author);
             return res.json({author})
         } catch (e) {
             return res.json({error: e})

@@ -35,10 +35,10 @@ class addAuthorModal extends Component {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn-primary mr-1" onClick={this.addAuthorModal && this.addAuthor}>
+                        <button className="btn btn-primary mr-1" onClick={this.addAuthorModal && this.addAuthor}>
                             Add Author
                         </button>
-                        <button color="secondary" onClick={this.addAuthorModal}>cancel</button>
+                        <button className="btn btn-warning" onClick={this.addAuthorModal}>cancel</button>
                     </div>
                 </Modal>
             </div>

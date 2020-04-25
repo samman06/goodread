@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Modal, ModalHeader} from "reactstrap";
 
 class addBookModal extends Component {
-    bookModal  = () => this.props.addBookModal();
+    bookModal = () => this.props.addBookModal();
     onChange = ({target}) => this.props.onChange(target);
     addBook = () => this.props.addBook();
 
@@ -17,11 +17,11 @@ class addBookModal extends Component {
         return (
             <div>
                 <button
-                    onClick={this.bookModal } className='btn btn-info offset-10 mt-1 mb-1'>
+                    onClick={this.bookModal} className='btn btn-info offset-10 mt-1 mb-1'>
                     Add Book +
                 </button>
-                <Modal isOpen={isOpen} toggle={this.bookModal }>
-                    <ModalHeader toggle={this.bookModal }>Add Book</ModalHeader>
+                <Modal isOpen={isOpen} toggle={this.bookModal}>
+                    <ModalHeader toggle={this.bookModal}>Add Book</ModalHeader>
                     <div className="modal-body">
                         <div className="form-group">
                             <input className="form-control" name="name" id="name"
@@ -30,7 +30,7 @@ class addBookModal extends Component {
                         </div>
                         <div className="form-group">
                             <select className="form-control" name="categoryId" onChange={this.onChange}>
-                                <option value="0">Select Book</option>
+                                <option value="0">Select Category</option>
                                 {allCategories}
                             </select>
                             {errors.categoryId && <span>{errors.categoryId}</span>}
@@ -44,14 +44,14 @@ class addBookModal extends Component {
                         </div>
                         <div className="form-group">
                             <label>Upload Image</label>
-                            <input type="file" name="file" onChange={this.onChange}/>
+                            <input type="file" name="photo" onChange={this.onChange}/>
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn-primary mr-1" onClick={this.bookModal  && this.addBook}>
+                        <button className="btn btn-primary mr-1" onClick={this.bookModal && this.addBook}>
                             Add Book
                         </button>
-                        <button className="btn-secondary" onClick={this.bookModal }>
+                        <button className="btn btn-warning" onClick={this.bookModal}>
                             Cancel
                         </button>
                     </div>

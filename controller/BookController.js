@@ -32,7 +32,8 @@ class BookController {
 
     async addNewBook(req, res) {
         if (req.user.isAdmin !== true) return res.status(400).json({msg: 'Un Authorized Access'});
-        const {name, categoryId, authorId, authorName, photo = ""} = req.body;
+        const {name, categoryId, authorId, authorName} = req.body;
+        const photo = req.file.path;
         const {errors, isValid} = validation.validateBookInputs(name);
         if (!isValid) return res.json({errors});
         try {

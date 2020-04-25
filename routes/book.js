@@ -1,13 +1,8 @@
 const express = require('express');
 const bookRouter = express.Router();
-const multer = require('multer');
 const passport = require('passport');
-const {storage, fileFilter} = require('../configs/multr');
+const upload = require('../configs/multr');
 const Book = require("../controller/BookController");
-const upload = multer({
-    storage, fileFilter,
-    limits: {fileSize: 1024 * 1024 * 5},
-});
 
 //get all books
 bookRouter.get('/',

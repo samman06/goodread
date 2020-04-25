@@ -50,7 +50,7 @@ class editBookModal extends Component {
                         <button className="btn btn-primary mr-1" onClick={this.bookModal && this.editBook}>
                             Edit
                         </button>
-                        <button className="btn-secondary" onClick={this.bookModal}>Cancel</button>
+                        <button className="btn btn-warning" onClick={this.bookModal}>Cancel</button>
                     </ModalFooter>
                 </Modal>
             </div>

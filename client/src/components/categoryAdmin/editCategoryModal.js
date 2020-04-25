@@ -25,11 +25,11 @@ class EditModal extends Component {
 
                     </ModalBody>
                     <ModalFooter>
-                        <button onClick={this.openCategoryModal && this.editCategory}>
+                        <button className="btn btn-primary" onClick={this.openCategoryModal && this.editCategory}>
                             Edit
                         </button>
                         {' '}
-                        <button color="secondary" onClick={this.editCategory}>Cancel</button>
+                        <button className="btn btn-warning" onClick={this.editCategory}>Cancel</button>
                     </ModalFooter>
                 </Modal>
             </div>

@@ -23,10 +23,10 @@ class addCategoryModal extends Component {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn-primary mr-1" onClick={this.openAddModal && this.addCategory}>
+                        <button className="btn btn-primary mr-1" onClick={this.openAddModal && this.addCategory}>
                             Add Category
                         </button>
-                        <button color="secondary" onClick={this.openAddModal}>cancel</button>
+                        <button className="btn btn-warning" onClick={this.openAddModal}>cancel</button>
                     </div>
                 </Modal>
             </div>
